@@ -226,7 +226,8 @@ class _SignupState extends State<Signup> {
                       }
                       print('fname:$firstName\nlname:$lastName\nmail:$mail\npass:$password');
                     },
-                    child: const Text("Create")
+                    child: const Text("Create"),
+                  style: mainBstyle,
                 ),
               ],
             ),

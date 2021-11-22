@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:project/design/ColorPalet.dart';
 
 //loading page
 class Loading extends StatefulWidget {
@@ -27,10 +28,16 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.cyan[800],
+      backgroundColor: ColorPalet.main,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
+        children:  <Widget>[
+          Padding(
+              padding: EdgeInsets.all(24),
+              child: Container(
+                child: Image.network("https://i.imgur.com/65OdlnF.jpg"),
+              ),
+          ),
           SpinKitSpinningLines(
             color: Colors.amberAccent,
             size: 75,

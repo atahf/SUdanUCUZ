@@ -31,7 +31,7 @@ class _WelcomeState extends State<Welcome> {
           style: appBarText,
         ),
         centerTitle: true,
-        backgroundColor: ColorPalet.main,
+        backgroundColor: ColorPalet.appBarColor,
       ),
       body: SafeArea(
         maintainBottomViewPadding: false,
@@ -73,9 +73,7 @@ class _WelcomeState extends State<Welcome> {
                           'Signup',
                         ),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.amber,
-                      ),
+                      style: mainBstyle,
                     ),
                   ),
 
@@ -91,9 +89,7 @@ class _WelcomeState extends State<Welcome> {
                         padding: EdgeInsets.symmetric(vertical: 12.0),
                         child: Text("Login"),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.amber,
-                      ),
+                      style: mainBstyle,
                     ),
                   ),
                 ],

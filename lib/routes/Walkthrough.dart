@@ -25,6 +25,13 @@ class _WalkthroughState extends State<Walkthrough> {
     "Buy/Sell",
   ];
 
+  List <String> Links = [
+    "https://i.imgur.com/65OdlnF.jpg",
+    "https://cdn5.vectorstock.com/i/1000x1000/44/19/woman-with-shopping-cart-and-products-vector-22394419.jpg",
+    "https://cdn5.vectorstock.com/i/1000x1000/44/19/woman-with-shopping-cart-and-products-vector-22394419.jpg",
+    "https://cdn5.vectorstock.com/i/1000x1000/44/19/woman-with-shopping-cart-and-products-vector-22394419.jpg"
+  ];
+
   List <String> SemiTitle = [
     "Welcome to SUdanUcuz",
     "The Purpose of the App",
@@ -80,8 +87,8 @@ class _WalkthroughState extends State<Walkthrough> {
         children: [
           Padding(
             padding: EdgeInsets.all(20),
-            child: ClipOval(
-                child: Image.network("https://cdn5.vectorstock.com/i/1000x1000/44/19/woman-with-shopping-cart-and-products-vector-22394419.jpg")
+            child: ClipRect(
+                child: Image.network(Links[current-1])
             ),
           ),
           Divider(
@@ -121,7 +128,7 @@ class _WalkthroughState extends State<Walkthrough> {
                   child: Center(
                     child: Text(
                       Descriptions[current-1],
-                      style:generalText,
+                      style:generalTextStyle,
                       textAlign: TextAlign.center ,
                     ),
                   ),
@@ -147,7 +154,7 @@ class _WalkthroughState extends State<Walkthrough> {
                   padding: const EdgeInsets.fromLTRB(14,0,0,14),
                   child: Text(
                       "$current/4",
-                      style: generalText
+                      style: generalTextStyle
                   ),
                 ),
 

@@ -3,18 +3,19 @@ import 'package:project/design/ColorPalet.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final appBarText = GoogleFonts.raleway(
-  fontWeight: FontWeight.w500,
-  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  fontSize: 24,
 );
 
-final generalText = GoogleFonts.raleway(
+final generalTextStyle = GoogleFonts.raleway(
     fontSize: 16,
-    fontWeight: FontWeight.w300,
-    color: ColorPalet.main
+    fontWeight: FontWeight.w500,
+    color: ColorPalet.generalText,
+    letterSpacing: 1
 );
 
 final mainBstyle = ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(ColorPalet.main),
+    foregroundColor: MaterialStateProperty.all(ColorPalet.generalText),
     backgroundColor: MaterialStateProperty.all(ColorPalet.buttonBack)
 );
 
