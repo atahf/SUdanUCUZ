@@ -49,7 +49,7 @@ class _WalkthroughState extends State<Walkthrough> {
       Navigator.push<void>(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) => const Loading(routeName: "/login"),
+          builder: (BuildContext context) => const Loading(routeName: "/welcome"),
         ),
       );
     }
