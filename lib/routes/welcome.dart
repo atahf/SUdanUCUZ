@@ -24,6 +24,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           "Welcome",
@@ -42,16 +43,16 @@ class _WelcomeState extends State<Welcome> {
                 padding: const EdgeInsets.fromLTRB(1.5, 2, 1.5, 1.75),
                 child: RichText(
                   text: const TextSpan(
-                    text: "Welcome",
+                    text: "",
                   ),
                 ),
               ),
             ),
             const Spacer(),
 
-            const Padding(
-              padding: EdgeInsets.all(40.0),
-              child: Text("Profile"),
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Image.network("https://i.imgur.com/65OdlnF.jpg"),
             ),
 
             const Spacer(),
@@ -64,7 +65,7 @@ class _WelcomeState extends State<Welcome> {
                     flex: 1,
                     child: OutlinedButton(
                       onPressed: () {
-
+                        goPage("/signup");
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
