@@ -4,7 +4,7 @@ import 'package:project/design/TextStyles.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
 import 'loading.dart';
-
+import 'package:project/design/Dimensions.dart';
 
 class Walkthrough extends StatefulWidget {
   const Walkthrough({Key? key}) : super(key: key);
@@ -86,7 +86,7 @@ class _WalkthroughState extends State<Walkthrough> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: Dimensions.regularPadding,
             child: ClipRect(
                 child: Image.network(Links[current-1])
             ),
@@ -101,7 +101,7 @@ class _WalkthroughState extends State<Walkthrough> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: Dimensions.regularPadding,
                   child: Text(
                       SemiTitle[current-1],
                       style: semiTitlestyle
@@ -142,7 +142,7 @@ class _WalkthroughState extends State<Walkthrough> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(14,0,0,14),
+                  padding: const EdgeInsets.fromLTRB(Dimensions.autoLeft,0,0,Dimensions.autoBottom),
                   child: OutlinedButton(
                       onPressed: (){previous();},
                       child: Text("Prev"),
@@ -151,7 +151,7 @@ class _WalkthroughState extends State<Walkthrough> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(14,0,0,14),
+                  padding: const EdgeInsets.fromLTRB(0,0,0,Dimensions.autoBottom),
                   child: Text(
                       "$current/4",
                       style: generalTextStyle
@@ -159,7 +159,7 @@ class _WalkthroughState extends State<Walkthrough> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,0,14,14),
+                  padding: const EdgeInsets.fromLTRB(0,0,Dimensions.autoRight,Dimensions.autoBottom),
                   child: OutlinedButton(
                       onPressed: (){next();},
                       child: Text("Next"),
