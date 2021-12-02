@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "416566691661",
+    "project_id": "sudanucuz-firebase",
+    "storage_bucket": "sudanucuz-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416566691661:android:b10b857f26076f332f1904",
+        "android_client_info": {
+          "package_name": "com.example.sustrudents.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416566691661-su3h7rjfu1q7c39ual0l601dt8vsuelj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWiYFmLj8IKQIEmjlPz6Zp5yMddAMxCd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416566691661-su3h7rjfu1q7c39ual0l601dt8vsuelj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
