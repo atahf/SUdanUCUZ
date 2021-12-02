@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "416566691661",
-    "project_id": "sudanucuz-firebase",
-    "storage_bucket": "sudanucuz-firebase.appspot.com"
+    "project_number": "123309881260",
+    "project_id": "sudanucuz-2e0a6",
+    "storage_bucket": "sudanucuz-2e0a6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:416566691661:android:b10b857f26076f332f1904",
+        "mobilesdk_app_id": "1:123309881260:android:9ab1f4989dcd1bfebe2c09",
         "android_client_info": {
           "package_name": "com.example.sustrudents.project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "416566691661-su3h7rjfu1q7c39ual0l601dt8vsuelj.apps.googleusercontent.com",
+          "client_id": "123309881260-4ukojv1f64c0ckh7n7cv88irds44vsjl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWiYFmLj8IKQIEmjlPz6Zp5yMddAMxCd8"
+          "current_key": "AIzaSyAWKkN71DJNdWl-OaC8xH9LDDLdItcqh0w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "416566691661-su3h7rjfu1q7c39ual0l601dt8vsuelj.apps.googleusercontent.com",
+              "client_id": "123309881260-4ukojv1f64c0ckh7n7cv88irds44vsjl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
