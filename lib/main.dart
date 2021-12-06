@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'routes/loading.dart';
 import 'routes/Walkthrough.dart';
 import 'routes/welcome.dart';
@@ -38,44 +39,42 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _initialization,
-        builder: (context,snapshot){
-          if(snapshot.hasError){
-            return MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: Text("No Firebase Connection!"),
-                )
-              )
-            );
-          }
-
-          if(snapshot.connectionState == ConnectionState.done){
-            runApp(MaterialApp(
-              initialRoute: "/",
-              routes: {
-                "/": (context) => Loading(routeName: "/walkthrough"),
-                "/walkthrough": (context) => Walkthrough(),
-                "/welcome": (context) => Welcome(),
-                "/login": (context) => Login(),
-                "/signup": (context) => Signup(),
-              },
-            ));
-          }
-
+      future: _initialization,
+      builder: (context,snapshot){
+        if(snapshot.hasError){
           return MaterialApp(
-            home: Center(
-              child: Text("Connecting to Firebase",
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-                backgroundColor: Colors.red,
-              ),),
-            ),
+            home: Scaffold(
+              body: Center(
+                child: Text("No Firebase Connection!"),
+              )
+            )
           );
+        }
 
+        if(snapshot.connectionState == ConnectionState.done){
+          runApp(MaterialApp(
+            initialRoute: "/",
+            routes: {
+              "/": (context) => Loading(routeName: "/walkthrough"),
+              "/walkthrough": (context) => Walkthrough(),
+              "/welcome": (context) => Welcome(),
+              "/login": (context) => Login(),
+              "/signup": (context) => Signup(),
+            },
+          ));
+        }
 
-        },);
+        return const MaterialApp(
+          home: Center(
+            child: SpinKitSpinningLines(
+              color: Colors.amberAccent,
+              size: 75,
+            ),
+          ),
+        );
+
+      },
+    );
   }
 }
 
@@ -86,13 +85,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FIREBASEEEEE"),
+        title: const Text("FIREBASEEEEE"),
       ),
-      body: Center(
-        child: Text("Connected",
+      body: const Center(
+        child: Text(
+          "Connected",
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 30),),
+              fontSize: 30
+          ),
+        ),
       ),
     );
   }
