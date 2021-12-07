@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -11,19 +12,38 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  final _formKey = GlobalKey<FormState>();
-  late String firstName;
-  late String lastName;
-  late String mail;
-  late String password;
 
-  @override
-  void initState() {
-    super.initState();
-    firstName = "";
-    lastName = "";
-    mail = "";
-    password = "";
+  String _message = '';
+  int attemptCount = 0;
+  String mail = '';
+  String password = '';
+  String fname = '';
+  String lname = '';
+
+  final _formKey = GlobalKey<FormState>();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+
+  void setMessage(String msg) {
+    setState(() {
+      _message = msg;
+    });
+  }
+
+  Future<void> signupUser() async {
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: mail, password: password);
+      print(userCredential.toString());
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      if(e.code == 'email-already-in-use') {
+        setMessage('This email is already in use');
+      }
+      else if(e.code == 'weak-password') {
+        setMessage('Weak password, add uppercase, lowercase, digit, special character, emoji, etc.');
+      }
+    }
   }
 
   @override
@@ -71,7 +91,7 @@ class _SignupState extends State<Signup> {
                   },
                   onSaved: (value) {
                     if(value != null) {
-                      firstName = value;
+                      fname = value;
                     }
                   },
                 ),
@@ -104,7 +124,7 @@ class _SignupState extends State<Signup> {
                   },
                   onSaved: (value) {
                     if(value != null) {
-                      lastName = value;
+                      lname = value;
                     }
                   },
                 ),
@@ -182,7 +202,7 @@ class _SignupState extends State<Signup> {
                   },
                 ),
 
-                const SizedBox(height: 7.5),
+                /*const SizedBox(height: 7.5),
 
                 TextFormField(
                   obscuringCharacter: '*',
@@ -215,7 +235,7 @@ class _SignupState extends State<Signup> {
                     }
                     return null;
                   },
-                ),
+                ),*/
 
                 const SizedBox(height: 7.5),
 
@@ -223,8 +243,10 @@ class _SignupState extends State<Signup> {
                     onPressed: () {
                       if(_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+
+                        signupUser();
+
                       }
-                      print('fname:$firstName\nlname:$lastName\nmail:$mail\npass:$password');
                     },
                     child: const Text("Create"),
                   style: mainBstyle,
