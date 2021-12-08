@@ -18,6 +18,10 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
 
 
+  Future<void> _setLogEvent() async {
+    await widget.analytics.logEvent(name: "Welcome");
+  }
+
 
   void goPage(String pageRoute) {
     Navigator.push<void>(
@@ -91,7 +95,8 @@ class _WelcomeState extends State<Welcome> {
                     child: OutlinedButton(
                       onPressed: () {
                         // goPage("/login");
-                        Navigator.pushNamed(context, "/login");
+                         Navigator.pushNamed(context, "/login");
+                         _setLogEvent();
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
