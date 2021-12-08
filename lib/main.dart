@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'routes/loading.dart';
@@ -28,6 +30,8 @@ void main(){
 class MyFirebaseApp extends StatefulWidget {
   const MyFirebaseApp({Key? key}) : super(key: key);
 
+
+
   @override
   _MyFirebaseAppState createState() => _MyFirebaseAppState();
 }
@@ -35,6 +39,10 @@ class MyFirebaseApp extends StatefulWidget {
 class _MyFirebaseAppState extends State<MyFirebaseApp> {
 
   final Future <FirebaseApp> _initialization = Firebase.initializeApp();
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +60,15 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         }
 
         if(snapshot.connectionState == ConnectionState.done){
-          runApp(MaterialApp(
+          runApp (MaterialApp(
+            navigatorObservers: <NavigatorObserver>[observer],
             initialRoute: "/",
             routes: {
               "/": (context) => Loading(routeName: "/walkthrough"),
-              "/walkthrough": (context) => Walkthrough(),
-              "/welcome": (context) => Welcome(),
-              "/login": (context) => Login(),
-              "/signup": (context) => Signup(),
+              "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
+              "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
+              "/login": (context) => Login(analytics: analytics,observer: observer),
+              "/signup": (context) => Signup(analytics: analytics,observer: observer),
             },
           ));
         }

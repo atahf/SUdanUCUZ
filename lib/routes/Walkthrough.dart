@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:project/design/ColorPalet.dart';
 import 'package:project/design/TextStyles.dart';
@@ -7,7 +9,10 @@ import 'loading.dart';
 import 'package:project/design/Dimensions.dart';
 
 class Walkthrough extends StatefulWidget {
-  const Walkthrough({Key? key}) : super(key: key);
+  const Walkthrough({Key? key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _WalkthroughState createState() => _WalkthroughState();

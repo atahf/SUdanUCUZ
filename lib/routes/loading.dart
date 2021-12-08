@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project/design/ColorPalet.dart';
@@ -5,6 +7,8 @@ import 'package:project/design/ColorPalet.dart';
 //loading page
 class Loading extends StatefulWidget {
   final String routeName;
+
+
 
   const Loading({Key? key, required this.routeName}): super(key: key);
 

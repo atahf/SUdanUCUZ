@@ -1,16 +1,23 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'loading.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
 
 class Welcome extends StatefulWidget {
-  const Welcome({Key? key}) : super(key: key);
+  const Welcome({Key? key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _WelcomeState createState() => _WelcomeState();
 }
 
 class _WelcomeState extends State<Welcome> {
+
+
 
   void goPage(String pageRoute) {
     Navigator.push<void>(
@@ -83,7 +90,8 @@ class _WelcomeState extends State<Welcome> {
                     flex: 1,
                     child: OutlinedButton(
                       onPressed: () {
-                        goPage("/login");
+                        // goPage("/login");
+                        Navigator.pushNamed(context, "/login");
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
