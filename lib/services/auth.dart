@@ -40,11 +40,8 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: mail, password: pass);
       User user = result.user!;
       return _userFromFirebase(user);
-    } on FirebaseAuthException catch (e) {
-      if(e.code == 'user-not-found') {
-        signupWithMailAndPass(mail, pass);
-      }
-    } catch (e) {
+    }
+    catch (e) {
       print(e.toString());
       return null;
     }
