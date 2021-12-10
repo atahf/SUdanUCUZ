@@ -1,9 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'loading.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'dart:async';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key, required this.analytics, required this.observer}) : super(key: key);
@@ -16,6 +19,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+
 
 
   Future<void> _setLogEvent() async {
@@ -95,8 +99,15 @@ class _WelcomeState extends State<Welcome> {
                     child: OutlinedButton(
                       onPressed: () {
                         // goPage("/login");
-                         Navigator.pushNamed(context, "/login");
-                         _setLogEvent();
+                        //Navigator.pushNamed(context, "/login");
+                        //_setLogEvent();
+                        // Initialize Firebase.
+                            ()async {
+                          await Firebase.initializeApp();
+
+                          // Elsewhere in your code
+                          FirebaseCrashlytics.instance.crash();
+                        };
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),

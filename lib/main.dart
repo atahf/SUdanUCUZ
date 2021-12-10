@@ -8,7 +8,7 @@ import 'routes/welcome.dart';
 import 'routes/login.dart';
 import 'routes/signup.dart';
 import "package:firebase_core/firebase_core.dart";
-
+import "package:firebase_crashlytics/firebase_crashlytics.dart";
 
 /*void main() => runApp(MaterialApp(
   initialRoute: "/",
