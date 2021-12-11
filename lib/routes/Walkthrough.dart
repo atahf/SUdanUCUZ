@@ -5,7 +5,6 @@ import 'package:project/design/ColorPalet.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
-import 'loading.dart';
 import 'package:project/design/Dimensions.dart';
 
 class Walkthrough extends StatefulWidget {
@@ -58,12 +57,7 @@ class _WalkthroughState extends State<Walkthrough> {
       });
     }
     else {
-      Navigator.push<void>(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const Loading(routeName: "/welcome"),
-        ),
-      );
+      Navigator.of(context).pop();
     }
   }
 

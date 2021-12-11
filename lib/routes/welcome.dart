@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'loading.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -20,24 +21,35 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
 
+  void addBoolToSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('seenWalk', true);
+    Navigator.pushNamed(context, "/walkthrough");
+    _setLogEvent();
+  }
 
+  Future<bool> getBoolValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool checkValue = prefs.containsKey('seenWalk');
+    if(checkValue == true) {
+      bool? boolValue = prefs.getBool('seenWalk');
+      if(boolValue == null) {
+        return false;
+      }
+      return boolValue;
+    }
+    return checkValue;
+  }
 
   Future<void> _setLogEvent() async {
     await widget.analytics.logEvent(name: "Welcome");
   }
 
-
-  void goPage(String pageRoute) {
-    Navigator.push<void>(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => Loading(routeName: pageRoute),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    if(getBoolValuesSF() != true) {
+      addBoolToSF();
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -63,11 +75,14 @@ class _WelcomeState extends State<Welcome> {
                 ),
               ),
             ),
+
             const Spacer(),
 
             Padding(
               padding: const EdgeInsets.all(40.0),
-              child: Image.network("https://i.imgur.com/65OdlnF.jpg"),
+              child: Container(
+                child: Image.asset("assets/logo.jpg", fit: BoxFit.cover),
+              ),
             ),
 
             const Spacer(),
@@ -80,7 +95,8 @@ class _WelcomeState extends State<Welcome> {
                     flex: 1,
                     child: OutlinedButton(
                       onPressed: () {
-                        goPage("/signup");
+                        Navigator.pushNamed(context, "/signup");
+                        _setLogEvent();
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -98,7 +114,6 @@ class _WelcomeState extends State<Welcome> {
                     flex: 1,
                     child: OutlinedButton(
                       onPressed: () {
-                        // goPage("/login");
                         Navigator.pushNamed(context, "/login");
                         _setLogEvent();
                         // Initialize Firebase.

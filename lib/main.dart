@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'routes/loading.dart';
 import 'routes/Walkthrough.dart';
 import 'routes/welcome.dart';
@@ -9,17 +10,6 @@ import 'routes/login.dart';
 import 'routes/signup.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_crashlytics/firebase_crashlytics.dart";
-
-/*void main() => runApp(MaterialApp(
-  initialRoute: "/",
-  routes: {
-    "/": (context) => Loading(routeName: "/walkthrough"),
-    "/walkthrough": (context) => Walkthrough(),
-    "/welcome": (context) => Welcome(),
-    "/login": (context) => Login(),
-    "/signup": (context) => Signup(),
-  },
-));*/
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,14 +33,13 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _initialization,
       builder: (context,snapshot){
         if(snapshot.hasError){
-          return MaterialApp(
+          return const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: Text("No Firebase Connection!"),
@@ -62,9 +51,8 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         if(snapshot.connectionState == ConnectionState.done){
           runApp (MaterialApp(
             navigatorObservers: <NavigatorObserver>[observer],
-            initialRoute: "/",
+            initialRoute: "/welcome",
             routes: {
-              "/": (context) => Loading(routeName: "/walkthrough"),
               "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
               "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
               "/login": (context) => Login(analytics: analytics,observer: observer),
@@ -73,11 +61,22 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
           ));
         }
 
-        return const MaterialApp(
+        return MaterialApp(
           home: Center(
-            child: SpinKitSpinningLines(
-              color: Colors.amberAccent,
-              size: 75,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Container(
+                    child: Image.asset("assets/logo.jpg", fit: BoxFit.cover),
+                  ),
+                ),
+                const SpinKitSpinningLines(
+                  color: Colors.amberAccent,
+                  size: 75,
+                ),
+              ],
             ),
           ),
         );
