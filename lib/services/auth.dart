@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -40,9 +41,11 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: mail, password: pass);
       User user = result.user!;
       return _userFromFirebase(user);
-    }
-    catch (e) {
-      print(e.toString());
+    }  catch (e) {
+      print('ERROR: ' + e.toString());
+      AlertDialog(
+          title: Text(e.toString())
+      );
       return null;
     }
   }
@@ -58,6 +61,16 @@ class AuthService {
 }
 
 class AuthServiceSignUpGoogle {
+  static SnackBar customSnackBar({required String content}) {
+    return SnackBar(
+      backgroundColor: Colors.black,
+      content: Text(
+        content,
+        style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+      ),
+    );
+  }
+
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
@@ -83,13 +96,27 @@ class AuthServiceSignUpGoogle {
         user = userCredential.user;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
-          // handle the error here
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthServiceSignUpGoogle.customSnackBar(
+              content:
+              'The account already exists with a different credential',
+            ),
+          );
         }
         else if (e.code == 'invalid-credential') {
-          // handle the error here
+          ScaffoldMessenger.of(context).showSnackBar(
+            AuthServiceSignUpGoogle.customSnackBar(
+              content:
+              'Error occurred while accessing credentials. Try again.',
+            ),
+          );
         }
       } catch (e) {
-        // handle the error here
+        ScaffoldMessenger.of(context).showSnackBar(
+          AuthServiceSignUpGoogle.customSnackBar(
+            content: 'Error occurred using Google Sign In. Try again.',
+          ),
+        );
       }
     }
 

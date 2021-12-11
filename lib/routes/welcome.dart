@@ -99,15 +99,15 @@ class _WelcomeState extends State<Welcome> {
                     child: OutlinedButton(
                       onPressed: () {
                         // goPage("/login");
-                        //Navigator.pushNamed(context, "/login");
-                        //_setLogEvent();
+                        Navigator.pushNamed(context, "/login");
+                        _setLogEvent();
                         // Initialize Firebase.
-                            ()async {
+                        /*() async {
                           await Firebase.initializeApp();
 
                           // Elsewhere in your code
                           FirebaseCrashlytics.instance.crash();
-                        };
+                        };*/
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
