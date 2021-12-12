@@ -40,13 +40,20 @@ class _SignupState extends State<Signup> {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: mail, password: password);
       print(userCredential.toString());
+      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       if(e.code == 'email-already-in-use') {
         setMessage('This email is already in use');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('This email is already in use'))
+        );
       }
       else if(e.code == 'weak-password') {
         setMessage('Weak password, add uppercase, lowercase, digit, special character, emoji, etc.');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Weak password, add uppercase, lowercase, digit, special character, emoji, etc.'))
+        );
       }
     }
   }
