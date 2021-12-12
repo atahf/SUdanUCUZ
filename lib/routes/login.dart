@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import '../design/TextStyles.dart';
@@ -33,6 +34,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
+    FirebaseCrashlytics.instance.setUserIdentifier("51");
+    FirebaseCrashlytics.instance.crash();
     super.initState();
   }
 
