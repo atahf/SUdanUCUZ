@@ -57,7 +57,7 @@ class _WalkthroughState extends State<Walkthrough> {
       });
     }
     else {
-      Navigator.of(context).pop();
+      Navigator.pushNamed(context, "/welcome");
     }
   }
 

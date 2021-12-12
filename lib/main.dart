@@ -10,6 +10,7 @@ import 'routes/login.dart';
 import 'routes/signup.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_crashlytics/firebase_crashlytics.dart";
+import 'package:after_layout/after_layout.dart';
 
 void main() async{
 
@@ -57,11 +58,12 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
             navigatorObservers: <NavigatorObserver>[observer],
             initialRoute: "/",
             routes: {
-              "/": (context) => const Loading(routeName: "/welcome"),
+              "/": (context) => const Loading(routeName: "/splash"),
               "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
               "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
               "/login": (context) => Login(analytics: analytics,observer: observer),
               "/signup": (context) => Signup(analytics: analytics,observer: observer),
+              "/splash": (context) => Splash(),
             },
           ));
         }
@@ -76,6 +78,46 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         );
 
       },
+    );
+  }
+}
+
+class Splash extends StatefulWidget {
+
+  @override
+  SplashState createState() => new SplashState();
+
+
+
+}
+
+class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new Welcome(analytics: analytics,observer: observer)));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new Walkthrough(analytics: analytics,observer: observer)));
+    }
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) => checkFirstSeen();
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new Center(
+        child: new Text('Loading...'),
+      ),
     );
   }
 }
