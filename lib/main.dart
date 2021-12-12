@@ -55,8 +55,9 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         if(snapshot.connectionState == ConnectionState.done){
           runApp (MaterialApp(
             navigatorObservers: <NavigatorObserver>[observer],
-            initialRoute: "/welcome",
+            initialRoute: "/",
             routes: {
+              "/": (context) => const Loading(routeName: "/welcome"),
               "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
               "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
               "/login": (context) => Login(analytics: analytics,observer: observer),
@@ -65,22 +66,11 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
           ));
         }
 
-        return MaterialApp(
+        return const MaterialApp(
           home: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:  <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Container(
-                    child: Image.asset("assets/logo.jpg", fit: BoxFit.cover),
-                  ),
-                ),
-                const SpinKitSpinningLines(
-                  color: Colors.amberAccent,
-                  size: 75,
-                ),
-              ],
+            child: SpinKitSpinningLines(
+              color: Colors.amberAccent,
+              size: 75,
             ),
           ),
         );

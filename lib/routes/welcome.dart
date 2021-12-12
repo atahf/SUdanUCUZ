@@ -21,35 +21,12 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
 
-  void addBoolToSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('seenWalk', true);
-    Navigator.pushNamed(context, "/walkthrough");
-    _setLogEvent();
-  }
-
-  Future<bool> getBoolValuesSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool checkValue = prefs.containsKey('seenWalk');
-    if(checkValue == true) {
-      bool? boolValue = prefs.getBool('seenWalk');
-      if(boolValue == null) {
-        return false;
-      }
-      return boolValue;
-    }
-    return checkValue;
-  }
-
   Future<void> _setLogEvent() async {
     await widget.analytics.logEvent(name: "Welcome");
   }
 
   @override
   Widget build(BuildContext context) {
-    if(getBoolValuesSF() != true) {
-      addBoolToSF();
-    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -136,13 +113,6 @@ class _WelcomeState extends State<Welcome> {
                       onPressed: () {
                         Navigator.pushNamed(context, "/login");
                         _setLogEvent();
-                        // Initialize Firebase.
-                        /*() async {
-                          await Firebase.initializeApp();
-
-                          // Elsewhere in your code
-                          FirebaseCrashlytics.instance.crash();
-                        };*/
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.0),
