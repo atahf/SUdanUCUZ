@@ -88,6 +88,26 @@ class _WelcomeState extends State<Welcome> {
             const Spacer(),
 
             Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    FirebaseCrashlytics.instance.crash();
+                  });
+                },
+                child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text(
+                    'Test CRASH',
+                  ),
+                ),
+                style: mainBstyle,
+              ),
+            ),
+
+            const Spacer(),
+
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
               child: Row(
                 children: <Widget>[

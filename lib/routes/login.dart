@@ -34,8 +34,6 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    FirebaseCrashlytics.instance.setUserIdentifier("51");
-    FirebaseCrashlytics.instance.crash();
     super.initState();
   }
 
