@@ -1,16 +1,22 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:project/services/auth.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'routes/loading.dart';
 import 'routes/Walkthrough.dart';
 import 'routes/welcome.dart';
 import 'routes/login.dart';
 import 'routes/signup.dart';
+import 'routes/feedView.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_crashlytics/firebase_crashlytics.dart";
 import 'package:after_layout/after_layout.dart';
+
+
 
 void main() async{
 
@@ -54,17 +60,22 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         }
 
         if(snapshot.connectionState == ConnectionState.done){
-          runApp (MaterialApp(
-            navigatorObservers: <NavigatorObserver>[observer],
-            initialRoute: "/",
-            routes: {
-              "/": (context) => const Loading(routeName: "/splash"),
-              "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
-              "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
-              "/login": (context) => Login(analytics: analytics,observer: observer),
-              "/signup": (context) => Signup(analytics: analytics,observer: observer),
-              "/splash": (context) => Splash(),
-            },
+          runApp (StreamProvider<User?>.value(
+            value: AuthService().user,
+            initialData: null,
+            child: MaterialApp(
+              navigatorObservers: <NavigatorObserver>[observer],
+              initialRoute: "/",
+              routes: {
+                "/": (context) => const Loading(routeName: "/splash"),
+                "/walkthrough": (context) => Walkthrough(analytics: analytics,observer: observer),
+                "/welcome": (context) => Welcome(analytics: analytics,observer: observer),
+                "/login": (context) => Login(analytics: analytics,observer: observer),
+                "/signup": (context) => Signup(analytics: analytics,observer: observer),
+                "/splash": (context) => Splash(),
+                "/feedview": (context) => FeedView(analytics: analytics,observer: observer),
+              },
+            ),
           ));
         }
 
@@ -80,6 +91,8 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
       },
     );
   }
+
+
 }
 
 class Splash extends StatefulWidget {
@@ -121,6 +134,11 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     );
   }
 }
+
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

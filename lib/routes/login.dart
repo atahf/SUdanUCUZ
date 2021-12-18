@@ -23,6 +23,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
   int attemptCount = 0;
   String mail = '';
   String password = '';
@@ -85,6 +87,7 @@ class _LoginState extends State<Login> {
 
                       if (user != null) {
                         print("success");
+                        Navigator.pushNamed(context, "/feedview");
                       }
 
                       setState(() {
@@ -188,19 +191,9 @@ class _LoginState extends State<Login> {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            try {
-                              auth.loginWithMailAndPass(context, mail, password);
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                  content: Text('Logged in'))
-                              );
-                              Navigator.of(context).pop();
-                            }
-                            catch(e) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(content: Text(e.toString())));
-                            }
-
-
+                            auth.loginWithMailAndPass(context, mail, password);
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Logging in')));
                           }
                         },
                         child: const Text("Login"),
@@ -217,7 +210,7 @@ class _LoginState extends State<Login> {
     }
 
     else {
-      return FeedView();
+      return FeedView(analytics: analytics, observer: observer) ;
     }
   }
 }

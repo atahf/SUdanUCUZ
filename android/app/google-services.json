@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "123309881260-28cedvjq3sg284l4kppq72o3qmm11spa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sustrudents.project",
+            "certificate_hash": "f7d4775e4f70fac2a50f26858c2575008e95d829"
+          }
+        },
+        {
+          "client_id": "123309881260-orcp6qkoucovr3m6c5kesdsvubkc850m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sustrudents.project",
+            "certificate_hash": "2e0b546fd1b0e8a4736d092db258acfc60f8c9df"
+          }
+        },
+        {
           "client_id": "123309881260-4ukojv1f64c0ckh7n7cv88irds44vsjl.apps.googleusercontent.com",
           "client_type": 3
         }

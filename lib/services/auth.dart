@@ -15,27 +15,15 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebase);
   }
 
-  static SnackBar customSnackBar({required String content}) {
-    return SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        content,
-        style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
-      ),
-    );
-  }
 
-  Future signupWithMailAndPass(BuildContext context, String mail, String pass) async {
+
+  Future signupWithMailAndPass( String mail, String pass) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: mail, password: pass);
       User user = result.user!;
       return _userFromFirebase(user);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        AuthServiceSignUpGoogle.customSnackBar(
-          content: e.toString()
-        ),
-      );
+
       return null;
     }
   }
@@ -46,11 +34,7 @@ class AuthService {
       User user = result.user!;
       return _userFromFirebase(user);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        AuthServiceSignUpGoogle.customSnackBar(
-            content: e.toString()
-        ),
-      );
+
       return null;
     }
   }
