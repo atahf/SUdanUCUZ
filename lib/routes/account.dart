@@ -5,7 +5,7 @@ import '../design/ColorPalet.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import "bottom.dart";
 class User1{
   final String imagePath;
   final String name;
@@ -169,12 +169,17 @@ class _AccountState extends State<Account> {
                     style: TextStyle(fontSize: 15,color: Colors.white,
                         fontWeight: FontWeight.bold)
                 ),
+
               ],
             ),
           ),
 
+
+
         ],
+
       ),
+      bottomNavigationBar: Bottom(),
     );
   }
 }

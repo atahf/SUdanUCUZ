@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/routes/bottom.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -19,14 +20,14 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorPalet.main,
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
 
         title: Text(
           "My Profile",
           style: appBarText,
         ),
-        backgroundColor: ColorPalet.titleC,
+        backgroundColor: Colors.grey[800],
         centerTitle: true,
         actions: [
           Padding(
@@ -75,7 +76,7 @@ class _ProfileState extends State<Profile> {
             child: FlatButton(
               padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                color: Colors.blue,
+                color: Colors.amberAccent[400],
                 onPressed: () {
                   Navigator.pushNamed(context, "/account");
                 },
@@ -102,7 +103,7 @@ class _ProfileState extends State<Profile> {
             child: FlatButton(
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                color: Colors.blue,
+                color: Colors.amberAccent[400],
                 onPressed: () {},
                 child: Row(
                   children: [
@@ -125,7 +126,7 @@ class _ProfileState extends State<Profile> {
             child: FlatButton(
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                color: Colors.blue,
+                color: Colors.amberAccent[400],
                 onPressed: () {},
                 child: Row(
                   children: [
@@ -148,7 +149,7 @@ class _ProfileState extends State<Profile> {
             child: FlatButton(
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                color: Colors.blue,
+                color: Colors.amberAccent[400],
                 onPressed: () {},
                 child: Row(
                   children: [
@@ -167,8 +168,10 @@ class _ProfileState extends State<Profile> {
           ),
 
 
+
         ],
       ),
+      bottomNavigationBar: Bottom(),
     );
   }
 }

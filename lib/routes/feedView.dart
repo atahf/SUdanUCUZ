@@ -3,7 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
 import '../services/db.dart';
-
+import "../routes/bottom.dart";
 class FeedView extends StatefulWidget {
 
    FeedView({Key? key, required this.analytics, required this.observer}) : super(key: key);
@@ -62,8 +62,15 @@ class _FeedViewState extends State<FeedView> {
 
           ),
 
+
+
         ],
+
+
       ),
+      bottomNavigationBar: Bottom(),
+
+
     );
   }
 }

@@ -18,7 +18,7 @@ import 'package:after_layout/after_layout.dart';
 import "routes/profile.dart";
 import "routes/account.dart";
 import "routes/editprofile.dart";
-
+import "routes/bottom.dart";
 
 
 void main() async{

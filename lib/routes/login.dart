@@ -143,6 +143,7 @@ class _LoginState extends State<Login> {
                         onSaved: (value) {
                           if (value != null) {
                             mail = value;
+
                           }
                         },
                       ),
