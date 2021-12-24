@@ -104,7 +104,7 @@ class _AccountState extends State<Account> {
                       SizedBox(height:5),
 
                       Text(
-                        "Ranking",
+                        "Rating",
                         style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
                       ),
                     ],
