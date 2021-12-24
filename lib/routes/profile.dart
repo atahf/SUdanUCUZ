@@ -5,6 +5,7 @@ import '../design/ColorPalet.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -46,7 +47,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       body: Column(
-        children: [
+        children: <Widget>[
           SizedBox(height: 20),
           SizedBox(
             height: 115,
@@ -75,14 +76,22 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Colors.blue,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/account");
+                },
                 child: Row(
                   children: [
                     Icon(
                       Icons.account_circle_outlined,
+
                     ),
                     SizedBox(width: 30),
-                    Expanded(child: Text("My account")),
+                    Expanded(child: Text("My account")
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 33,
+                    ),
 
                   ],
                 )),
@@ -102,6 +111,10 @@ class _ProfileState extends State<Profile> {
                     ),
                     SizedBox(width: 30),
                     Expanded(child: Text("My products")),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 33,
+                    ),
 
                   ],
                 )),
@@ -121,6 +134,10 @@ class _ProfileState extends State<Profile> {
                     ),
                     SizedBox(width: 30),
                     Expanded(child: Text("My comments")),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 33,
+                    ),
 
                   ],
                 )),
@@ -136,10 +153,14 @@ class _ProfileState extends State<Profile> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.history_toggle_off,
+                      Icons.history,
                     ),
                     SizedBox(width: 30),
                     Expanded(child: Text("Previous orders / sales")),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 33,
+                    ),
 
                   ],
                 )),

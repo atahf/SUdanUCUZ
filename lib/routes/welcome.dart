@@ -114,20 +114,7 @@ class _WelcomeState extends State<Welcome> {
                     ),
 
                     const SizedBox(width: 8.0,),
-                    Expanded(
-                      flex: 1,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/profile");
-                          _setLogEvent();
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12.0),
-                          child: Text("Profile"),
-                        ),
-                        style: mainBstyle,
-                      ),
-                    ),
+
                     Expanded(
                       flex: 1,
                       child: OutlinedButton(

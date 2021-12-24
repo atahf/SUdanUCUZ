@@ -16,6 +16,9 @@ import "package:firebase_core/firebase_core.dart";
 import "package:firebase_crashlytics/firebase_crashlytics.dart";
 import 'package:after_layout/after_layout.dart';
 import "routes/profile.dart";
+import "routes/account.dart";
+import "routes/editprofile.dart";
+
 
 
 void main() async{
@@ -75,6 +78,8 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/splash": (context) => Splash(),
                 "/feedview": (context) => FeedView(analytics: analytics,observer: observer),
                 "/profile": (context) => Profile(),
+                "/account": (context) => Account(),
+                "/editprofile": (context) => Editprofile(),
               },
             ),
           ));

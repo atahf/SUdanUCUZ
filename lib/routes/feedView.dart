@@ -35,15 +35,34 @@ class _FeedViewState extends State<FeedView> {
           icon: Icon(Icons.logout),
         ),
       ),
-      body: Center(
-        child: Text(
-          'FEED VIEW',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-            color: Colors.lightBlue,
+      body: Column(
+        children: [
+          Center(
+            child: Text(
+              'FEED VIEW',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                color: Colors.lightBlue,
+              ),
+            ),
+
           ),
-        ),
+
+
+          OutlinedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/profile");
+
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.0),
+              child: Text("Profile"),
+            ),
+
+          ),
+
+        ],
       ),
     );
   }
