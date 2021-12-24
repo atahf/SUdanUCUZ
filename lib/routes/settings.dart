@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:project/routes/bottom.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/routes/settings.dart';
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
 
-  @override
-  _ProfileState createState() => _ProfileState();
-}
+class Settings extends StatelessWidget {
+  const Settings({Key? key}) : super(key: key);
 
-
-
-class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,74 +16,33 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
 
         title: Text(
-          "My Profile",
+          "Settings",
           style: appBarText,
         ),
         backgroundColor: Colors.grey[800],
         centerTitle: true,
-        actions: [
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-
-                ),
-                onPressed: () {},
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/settings");
-                  },
-                  icon: Icon(
-                    Icons.settings
-                  ),
-                ),
-              )
-          ),
-
-        ],
       ),
       body: Column(
         children: <Widget>[
           SizedBox(height: 20),
-          SizedBox(
-            height: 115,
-            width: 115,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage("assets/eminem.jpg"),
-                ),
-                SizedBox(
-                  height: 46,
-                  width: 46,
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Text(""),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             child: FlatButton(
-              padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Colors.amberAccent[400],
                 onPressed: () {
-                  Navigator.pushNamed(context, "/account");
+                  //Navigator.pushNamed(context, "/account");
                 },
                 child: Row(
                   children: [
                     Icon(
-                      Icons.account_circle_outlined,
+                      Icons.dark_mode,
 
                     ),
                     SizedBox(width: 30),
-                    Expanded(child: Text("My account")
+                    Expanded(child: Text("Theme")
                     ),
                     Icon(
                       Icons.chevron_right,
@@ -112,10 +63,10 @@ class _ProfileState extends State<Profile> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.work_rounded,
+                      Icons.language,
                     ),
                     SizedBox(width: 30),
-                    Expanded(child: Text("My products")),
+                    Expanded(child: Text("Language")),
                     Icon(
                       Icons.chevron_right,
                       size: 33,
@@ -135,10 +86,10 @@ class _ProfileState extends State<Profile> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.comment_sharp,
+                      Icons.people,
                     ),
                     SizedBox(width: 30),
-                    Expanded(child: Text("My comments")),
+                    Expanded(child: Text("Credits")),
                     Icon(
                       Icons.chevron_right,
                       size: 33,
@@ -158,10 +109,10 @@ class _ProfileState extends State<Profile> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.history,
+                      Icons.logout,
                     ),
                     SizedBox(width: 30),
-                    Expanded(child: Text("Previous orders / sales")),
+                    Expanded(child: Text("Logout")),
                     Icon(
                       Icons.chevron_right,
                       size: 33,
@@ -175,9 +126,7 @@ class _ProfileState extends State<Profile> {
 
         ],
       ),
-      bottomNavigationBar: Bottom(),
+      //bottomNavigationBar: Bottom(),
     );
   }
 }
-
-

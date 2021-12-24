@@ -19,7 +19,7 @@ import "routes/profile.dart";
 import "routes/account.dart";
 import "routes/editprofile.dart";
 import "routes/bottom.dart";
-
+import "routes/settings.dart";
 
 void main() async{
 
@@ -80,6 +80,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/profile": (context) => Profile(),
                 "/account": (context) => Account(),
                 "/editprofile": (context) => Editprofile(),
+                "/settings" : (context) => Settings(),
               },
             ),
           ));
