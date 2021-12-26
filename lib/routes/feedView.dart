@@ -123,7 +123,7 @@ class _FeedViewState extends State<FeedView> {
                           );
                         },
                         icon: Icon(
-                          Icons.add_circle,
+                          Icons.search,
                         ),
                         iconSize: 30,
                         padding: EdgeInsets.zero,
