@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -19,11 +21,16 @@ class AuthService {
 
 
 
-  Future signupWithMailAndPass( String mail, String pass) async {
+  Future signupWithMailAndPass( String mail, String pass,String name,String lastName) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: mail, password: pass);
       User user = result.user!;
+
+      await _firestore.collection("UserInfos").doc(user.uid).set({"userName": name,"email":mail,"lastName":lastName});
+      //var list_name = new List.filled(3, null, growable: false);
+
       return _userFromFirebase(user);
+
     } catch (e) {
 
       return null;
@@ -70,11 +77,11 @@ class AuthServiceSignUpGoogle {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
-      await googleSignIn.signIn();
+    await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+      await googleSignInAccount.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,

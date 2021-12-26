@@ -28,6 +28,7 @@ class UserPreferences{
     imagePath: "assets/logo.png",
     name: "Harun Akçay",
 
+
     email: "meteharun@sabanciuniv.edu",
     about: "Sophomore / Computer Engineer\nYou can contact me if you want high grades in math exams :)",
   );

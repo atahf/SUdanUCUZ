@@ -8,6 +8,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/routes/settings.dart';
+
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -23,6 +25,9 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: (){},
+        ),
 
         title: Text(
           "My Profile",
@@ -55,6 +60,7 @@ class _ProfileState extends State<Profile> {
       body: Column(
         children: <Widget>[
           SizedBox(height: 20),
+
           SizedBox(
             height: 115,
             width: 115,

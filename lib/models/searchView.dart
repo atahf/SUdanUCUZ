@@ -24,6 +24,7 @@ class _SearchViewState extends State<SearchView> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Card(
+      color: Colors.grey[900],
       child: StreamBuilder<QuerySnapshot>(
         stream: _itemsService.getStatusSearch(widget.query.text),
         builder: (context,snaphot){

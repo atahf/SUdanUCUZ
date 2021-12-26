@@ -62,6 +62,7 @@ class _NotificationViewState extends State<NotificationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         title: Text(

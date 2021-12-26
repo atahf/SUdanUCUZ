@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:project/services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,6 +29,7 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  AuthService authService = AuthService();
 
 
   void setMessage(String msg) {
@@ -252,15 +254,15 @@ class _SignupState extends State<Signup> {
                 const SizedBox(height: 7.5),
 
                 ElevatedButton(
-                    onPressed: () {
-                      if(_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
+                  onPressed: () {
+                    if(_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
 
-                        signupUser();
+                      authService.signupWithMailAndPass(mail, password, fname, lname);
 
-                      }
-                    },
-                    child: const Text("Create"),
+                    }
+                  },
+                  child: const Text("Create"),
                   style: mainBstyle,
                 ),
               ],

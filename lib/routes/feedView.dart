@@ -89,18 +89,44 @@ class _FeedViewState extends State<FeedView> {
                         borderRadius: BorderRadius.circular(15),
 
                       ),
-                      child: TextField(
-                        controller: control,
-                        decoration:  InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search, color: Colors.grey[800]),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 9,
+                      child:
+                        TextField(
+                          controller: control,
+                          decoration:  InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintText: "Search",
+                            prefixIcon: Icon(Icons.search, color: Colors.grey[800]),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 9,
+                            ),
                           ),
                         ),
+
+                    ),
+                    Container(
+                      //padding: EdgeInsets.all(12),
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        color: Colors.amberAccent[400],
+
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SearchView(query: control)),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.add_circle,
+                        ),
+                        iconSize: 30,
+                        padding: EdgeInsets.zero,
                       ),
                     ),
                     InkWell(
@@ -152,30 +178,7 @@ class _FeedViewState extends State<FeedView> {
                         ],
                       ),
                     ),
-                    Container(
-                      //padding: EdgeInsets.all(12),
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[900],
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        color: Colors.amberAccent[400],
 
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SearchView(query: control)),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.add_circle,
-                        ),
-                        iconSize: 30,
-                        padding: EdgeInsets.zero,
-                      ),
-                    ),
 
                   ],
                 ),
