@@ -25,6 +25,7 @@ import "routes/settings.dart";
 import 'routes/addListing.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'models/notifications.dart';
+import 'routes/mapView.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -158,6 +159,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/settings" : (context) => Settings(),
                 "/addListing" : (context) => AddListing(),
                 "/notifications" : (context) => NotificationView(notifs: notifs),
+                "/map" : (context) => MapApp(),
               },
             ),
           ));
