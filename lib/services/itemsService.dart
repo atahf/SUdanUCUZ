@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/models/itemModel.dart';
 import 'package:project/services/itemStorage.dart';
@@ -32,6 +33,12 @@ class itemsService {
   //status göstermek için
   Stream<QuerySnapshot> getStatus() {
     var ref = _firestore.collection("Items").snapshots();
+
+    return ref;
+  }
+
+  Stream<QuerySnapshot> getStatusSearch(String query) {
+    var ref = _firestore.collection("Items").where("price",isEqualTo: query).snapshots();
 
     return ref;
   }

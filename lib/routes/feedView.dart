@@ -23,6 +23,7 @@ class FeedView extends StatefulWidget {
 class _FeedViewState extends State<FeedView> {
   AuthService auth = AuthService();
 
+  TextEditingController control = TextEditingController();
   DBService db = DBService();
   int notifNumber = 0;
   Notifications notifs = Notifications();
@@ -88,9 +89,7 @@ class _FeedViewState extends State<FeedView> {
 
                       ),
                       child: TextField(
-                        onChanged: (value) {
-                          //search
-                        },
+                        controller: control,
                         decoration:  InputDecoration(
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -164,7 +163,10 @@ class _FeedViewState extends State<FeedView> {
                         color: Colors.amberAccent[400],
 
                         onPressed: () {
-                          //notifications
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SearchView(query: control)),
+                          );
                         },
                         icon: Icon(
                           Icons.add_circle,

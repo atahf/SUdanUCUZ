@@ -23,11 +23,12 @@ class _ItemListState extends State<ItemList> {
       stream: _itemsService.getStatus(),
       builder: (context,snaphot){
         return !snaphot.hasData ? CircularProgressIndicator() : ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: snaphot.data!.docs.length,
           shrinkWrap: true,
           itemBuilder: (context,index){
             DocumentSnapshot post = snaphot.data!.docs[index];
-            
+
             return Padding(
               padding: EdgeInsets.all(8.0),
               child: InkWell(
@@ -45,61 +46,61 @@ class _ItemListState extends State<ItemList> {
                     borderRadius: BorderRadius.circular(20),
                   ),
 
-                    child: Column(
+                  child: Column(
 
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(post["image"]),
-                              radius: size.height* 0.08,
-                            ),
-                            Flexible(
-                              child: Text(
-                                "${post["name"]}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-
-                          ],
-
-                        ),
-
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "${post["price"]}",
-                                style: TextStyle(
-                                  fontSize: 16,
-
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(40,0,0,0),
-                                child: OutlinedButton(
-                                    onPressed: (){},
-                                    child: Text("Add2Cart"),
-                                    style: mainBstyle
-                                ),
-                              ),
-                            ],
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(post["image"]),
+                            radius: size.height* 0.08,
                           ),
+                          Flexible(
+                            child: Text(
+                              "${post["name"]}",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                        ],
+
+                      ),
+
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "${post["price"]}",
+                              style: TextStyle(
+                                fontSize: 16,
+
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                              child: OutlinedButton(
+                                  onPressed: (){},
+                                  child: Text("Add2Cart"),
+                                  style: mainBstyle
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
 
 
 
 
-                      ],
-                    ),
+                    ],
+                  ),
 
                 ),
               ),
@@ -107,7 +108,7 @@ class _ItemListState extends State<ItemList> {
           },
         );
       },
-      
+
     );
   }
 }
