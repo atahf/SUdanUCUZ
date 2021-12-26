@@ -51,12 +51,16 @@ class _AccountState extends State<Account> {
 
     Future<dynamic > setUserName() async{
       var document = await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).get().then((DocumentSnapshot documentSnapshot) => documentSnapshot.data());
-      print(document);
       return document;
-
     }
 
     var doc = setUserName();
+
+    List<String> s = doc.toString().split(' ');
+    String lastName = s[1];
+    String userName = s[3];
+    String email = s[5];
+
 
 
     Widget Texti(){
