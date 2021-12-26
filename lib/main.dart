@@ -103,7 +103,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
-          notification.title,
+          notification.body,
           NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
