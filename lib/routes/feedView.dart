@@ -8,6 +8,8 @@ import '../services/auth.dart';
 import '../services/db.dart';
 import "../routes/bottom.dart";
 import 'package:project/models/ItemList.dart';
+import 'package:project/models/notifications.dart';
+
 class FeedView extends StatefulWidget {
 
    FeedView({Key? key, required this.analytics, required this.observer}) : super(key: key);
@@ -22,6 +24,14 @@ class _FeedViewState extends State<FeedView> {
   AuthService auth = AuthService();
 
   DBService db = DBService();
+  int notifNumber = 0;
+  Notifications notifs = Notifications();
+
+  @override
+  void setState(VoidCallback fn) {
+    notifNumber = notifs.getNotificationsCount();
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +121,7 @@ class _FeedViewState extends State<FeedView> {
                               color: Colors.amberAccent[400],
 
                               onPressed: () {
-                                //notifications
+                                Navigator.pushNamed(context, "/notifications");
                               },
                               icon: Icon(
                                   Icons.notifications,
@@ -120,7 +130,7 @@ class _FeedViewState extends State<FeedView> {
                               padding: EdgeInsets.zero,
                             ),
                           ),
-                          Positioned(
+                          /*Positioned(
                             right: 5,
                             top: 5,
                             child: Container(height:16,width: 16,
@@ -132,12 +142,12 @@ class _FeedViewState extends State<FeedView> {
                             ),
                               child: Center(
                                 child: Text(
-                                  "3", style: TextStyle(fontSize: 12,
+                                    notifNumber.toString() , style: TextStyle(fontSize: 12,
                                 height: 1, color: Colors.white, fontWeight: FontWeight.w600)
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
 
                         ],
                       ),

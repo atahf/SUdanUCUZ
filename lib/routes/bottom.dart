@@ -24,8 +24,6 @@ class Bottom extends StatelessWidget {
               //Navigator.pop(context);
 
               var route = ModalRoute.of(context);
-              print(route);
-              print("fsfsdfsdf");
               if(route!=null) {
                 if ("/feedview" != route.settings.name) {
                   Navigator.pushNamed(context, "/feedview");

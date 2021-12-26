@@ -24,6 +24,7 @@ import "routes/bottom.dart";
 import "routes/settings.dart";
 import 'routes/addListing.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'models/notifications.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -81,6 +82,8 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
+  Notifications notifs = Notifications();
+
   @override
   void initState() {
     super.initState();
@@ -96,10 +99,11 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
+        notifs.addNotification(notification.title, notification.title);
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
-          notification.body,
+          notification.title,
           NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
@@ -153,7 +157,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/editprofile": (context) => Editprofile(),
                 "/settings" : (context) => Settings(),
                 "/addListing" : (context) => AddListing(),
-
+                "/notifications" : (context) => NotificationView(notifs: notifs),
               },
             ),
           ));
