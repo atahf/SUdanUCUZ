@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
@@ -20,7 +21,7 @@ class User1{
     required this.name,
     required this.email,
     required this.about,
-});
+  });
 }
 
 class UserPreferences{
@@ -45,6 +46,33 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final user = UserPreferences.myUser;
+    var currentUser = FirebaseAuth.instance.currentUser;
+
+
+    Future<dynamic > setUserName() async{
+      var document = await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).get().then((DocumentSnapshot documentSnapshot) => documentSnapshot.data());
+      print(document);
+      return document;
+
+    }
+
+    var doc = setUserName();
+
+
+    Widget Texti(){
+      if (currentUser!= null){
+        return Text(
+            currentUser.uid,style: TextStyle(fontSize: 15,color: Colors.white,
+            fontWeight: FontWeight.bold)
+        );
+      }
+      else {
+        return Text(
+            "asdsadada",style: TextStyle(fontSize: 15,color: Colors.white,
+            fontWeight: FontWeight.bold)
+        );
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -58,7 +86,7 @@ class _AccountState extends State<Account> {
             ),
             SizedBox(width: 14),
             Text("My Account",
-            style: TextStyle(fontSize: 25)),
+                style: TextStyle(fontSize: 25)),
           ],
         ),
         centerTitle: true,
@@ -69,12 +97,13 @@ class _AccountState extends State<Account> {
         actions: [
 
           IconButton(
-              onPressed: (){
-                Navigator.pushNamed(context, "/editprofile");
-              },
-              icon: Icon(
+            onPressed: (){
+              //Navigator.pushNamed(context, "/editprofile");
+              setUserName();
+            },
+            icon: Icon(
                 Icons.edit
-              ),),
+            ),),
         ],
       ),
       body: ListView(
@@ -86,7 +115,7 @@ class _AccountState extends State<Account> {
             child: ClipOval(
 
               child: Image.asset("assets/eminem.jpg", fit: BoxFit.cover,
-              width:128, height: 128,),
+                width:128, height: 128,),
             ),
           ),
           SizedBox(height: 30),
@@ -95,69 +124,69 @@ class _AccountState extends State<Account> {
           //Center(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                MaterialButton(
-                  onPressed: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        "4.9",
-                        style: TextStyle(color: Colors.amberAccent[200],
-                            fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height:5),
+            children: <Widget>[
+              MaterialButton(
+                onPressed: () {},
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "4.9",
+                      style: TextStyle(color: Colors.amberAccent[200],
+                          fontSize: 25,fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height:5),
 
-                      Text(
-                        "Rating",
-                        style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                    Text(
+                      "Rating",
+                      style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8),
+              ),
+              SizedBox(width: 8),
 
-                MaterialButton(
-                  onPressed: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        "13",
-                        style: TextStyle(color: Colors.amberAccent[200],
-                            fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height:5),
-                      Text(
-                        "Sales",
-                        style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              MaterialButton(
+                onPressed: () {},
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "13",
+                      style: TextStyle(color: Colors.amberAccent[200],
+                          fontSize: 25,fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height:5),
+                    Text(
+                      "Sales",
+                      style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                MaterialButton(
-                  onPressed: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        "25",
-                        style: TextStyle(color: Colors.amberAccent[200],
-                            fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height:5),
-                      Text(
-                        "Purchases",
-                        style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              ),
+              SizedBox(width: 8),
+              MaterialButton(
+                onPressed: () {},
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "25",
+                      style: TextStyle(color: Colors.amberAccent[200],
+                          fontSize: 25,fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height:5),
+                    Text(
+                      "Purchases",
+                      style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ],
+              ),
+            ],
           ),
           SizedBox(height: 50),
           Padding(
@@ -166,15 +195,12 @@ class _AccountState extends State<Account> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("About",
-                  style: TextStyle(fontSize: 25,color: Colors.grey[400],
-                      fontWeight: FontWeight.bold)
-                ),
-                SizedBox(height:17),
-                Text(
-                  user.about,
-                    style: TextStyle(fontSize: 15,color: Colors.white,
+                    style: TextStyle(fontSize: 25,color: Colors.grey[400],
                         fontWeight: FontWeight.bold)
                 ),
+                SizedBox(height:17),
+
+                Texti(),
 
               ],
             ),
