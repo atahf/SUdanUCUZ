@@ -56,10 +56,7 @@ class _AccountState extends State<Account> {
 
     var doc = setUserName();
 
-    List<String> s = doc.toString().split(' ');
-    String lastName = s[1];
-    String userName = s[3];
-    String email = s[5];
+    List<String> s = doc.toString().replaceAll(",", "").replaceAll("}", "").replaceAll("{", "").split(' ');
 
 
 
