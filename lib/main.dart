@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:project/routes/addListing.dart';
 import 'package:project/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,7 @@ import "routes/account.dart";
 import "routes/editprofile.dart";
 import "routes/bottom.dart";
 import "routes/settings.dart";
+import 'routes/addListing.dart';
 
 void main() async{
 
@@ -81,6 +83,8 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/account": (context) => Account(),
                 "/editprofile": (context) => Editprofile(),
                 "/settings" : (context) => Settings(),
+                "/addListing" : (context) => AddListing(),
+
               },
             ),
           ));

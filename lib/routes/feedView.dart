@@ -1,9 +1,13 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/routes/addListing.dart';
+import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import '../services/db.dart';
 import "../routes/bottom.dart";
+import 'package:project/models/ItemList.dart';
 class FeedView extends StatefulWidget {
 
    FeedView({Key? key, required this.analytics, required this.observer}) : super(key: key);
@@ -24,6 +28,8 @@ class _FeedViewState extends State<FeedView> {
 
     db.addUser('name', 'surname', 'mail', 'token');
     db.addUserAutoID('nameAuto', 'surnameAuto', 'mail@auto', 'token');
+
+
 
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -163,28 +169,12 @@ class _FeedViewState extends State<FeedView> {
               ),
 
               SizedBox(height: 20),
-              Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal:20,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal:20,vertical:15),
-                  width: double.infinity,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: Colors.amberAccent[400],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    "30% Discount",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-              ),
+
+                ItemList(),
+
 
             ],
+
 
 
           ),
@@ -192,6 +182,13 @@ class _FeedViewState extends State<FeedView> {
       ),
       bottomNavigationBar: Bottom(),
 
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddListing()));
+        },
+        child: Icon(Icons.add),
+      ),
 
     );
   }

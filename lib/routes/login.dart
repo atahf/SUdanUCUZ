@@ -44,6 +44,7 @@ class _LoginState extends State<Login> {
 
     final user = Provider.of<User?>(context);
 
+
     if(user == null) {
       return Scaffold(
         backgroundColor: ColorPalet.main,
