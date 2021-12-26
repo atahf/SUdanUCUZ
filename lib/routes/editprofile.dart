@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
@@ -15,7 +16,22 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
+  TextEditingController itemController = TextEditingController();
+  TextEditingController itemController2 = TextEditingController();
+  TextEditingController itemController3 = TextEditingController();
   User1 user = UserPreferences.myUser;
+
+  var currentUser = FirebaseAuth.instance.currentUser;
+  Future updateUserData(String name,String mail,String lname) async {
+    return await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).set({
+      "email": mail,
+      "lastName": name,
+      "userName": lname,
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,6 +122,7 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                  controller: itemController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -130,6 +147,7 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                  controller: itemController2,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -154,6 +172,7 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                  controller: itemController3,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -167,6 +186,15 @@ class _EditprofileState extends State<Editprofile> {
                   ),
 
 
+                ),
+                SizedBox(height: 20,),
+                OutlinedButton(
+                  onPressed: (){
+                    updateUserData(itemController3.text, itemController2.text,itemController.text );
+                    Navigator.pop(context);
+                  },
+                  child: Text("Submit"),
+                  style: mainBstyle,
                 ),
               ],
 

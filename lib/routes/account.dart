@@ -105,8 +105,8 @@ class _AccountState extends State<Account> {
 
           IconButton(
             onPressed: (){
-              //Navigator.pushNamed(context, "/editprofile");
-              setUserName();
+              Navigator.pushNamed(context, "/editprofile");
+
             },
             icon: Icon(
                 Icons.edit

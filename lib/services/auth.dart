@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:project/services/DatabaseService.dart';
 
 
 
@@ -29,6 +30,7 @@ class AuthService {
       await _firestore.collection("UserInfos").doc(user.uid).set({"userName": name,"email":mail,"lastName":lastName});
       //var list_name = new List.filled(3, null, growable: false);
 
+      await DatabaseService(uid: user.uid).updateUserData("Add Something", name, mail, lastName);
       return _userFromFirebase(user);
 
     } catch (e) {
