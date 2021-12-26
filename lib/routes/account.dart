@@ -43,20 +43,26 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  String? name = "";
+  String? mail = "";
+
   @override
   Widget build(BuildContext context) {
     final user = UserPreferences.myUser;
     var currentUser = FirebaseAuth.instance.currentUser;
 
 
-    Future<dynamic > setUserName() async{
+    Future<void> setUserName() async{
       var document = await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).get().then((DocumentSnapshot documentSnapshot) => documentSnapshot.data());
-      return document;
+
+      List<String> s = document.toString().replaceAll(",", "").replaceAll("}", "").replaceAll("{", "").split(' ');
+      setState(() {
+        name = s[3] + ' ' + s[1];
+        mail = s[5];
+      });
     }
 
-    var doc = setUserName();
-
-    List<String> s = doc.toString().replaceAll(",", "").replaceAll("}", "").replaceAll("{", "").split(' ');
+    setUserName();
 
 
 
@@ -120,7 +126,12 @@ class _AccountState extends State<Account> {
             ),
           ),
           SizedBox(height: 30),
-          buildName(user),
+          buildName(User1(
+            name: name ?? UserPreferences.myUser.name,
+            email: mail ?? UserPreferences.myUser.email,
+            about: UserPreferences.myUser.about,
+            imagePath: UserPreferences.myUser.imagePath,
+          )),
           SizedBox(height: 30),
           //Center(),
           Row(
