@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:project/services/itemsService.dart';
+import 'package:project/routes/mapView.dart';
 
 
 class ItemList extends StatefulWidget {
@@ -83,6 +85,27 @@ class _ItemListState extends State<ItemList> {
 
                               ),
                               textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                              child: IconButton(
+                                  onPressed: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MapApp(
+                                          camPosition: LatLng(40.889550,29.374065),
+                                          title: "${post["name"]}",
+                                          price: "${post["price"]}",
+                                      )),
+                                      //TODO have to add LatLng values to each item
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.location_on_outlined,
+                                    color: Colors.red,
+                                    size: 25,
+                                  ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(40,0,0,0),
