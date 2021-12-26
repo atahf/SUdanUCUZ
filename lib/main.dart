@@ -99,7 +99,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        notifs.addNotification(notification.title, notification.title);
+        notifs.addNotification(notification.title, notification.body);
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
