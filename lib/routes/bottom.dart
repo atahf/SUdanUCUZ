@@ -21,25 +21,17 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
-              //Navigator.pop(context);
-
               var route = ModalRoute.of(context);
-              if(route!=null) {
-                if ("/feedview" != route.settings.name) {
-                  Navigator.pushNamed(context, "/feedview");
-                }
-                else{
+              if(route!.settings.name!=null) {
+                print(route.settings.name);
+                if ("/feedview" != route.settings.name && "/login" != route.settings.name) {
                   Navigator.pop(context);
                 }
               }
-              else{
+              else {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, "/feedview");
               }
-
-
-
-
-
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -108,8 +100,15 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/profile");
+              var route = ModalRoute.of(context);
+              if(route!.settings.name!=null) {
+                if ("/profile" != route.settings.name) {
+                  Navigator.pushNamed(context, "/profile");
+                }
+              }
+              else {
+                Navigator.pushNamed(context, "/profile");
+              }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
