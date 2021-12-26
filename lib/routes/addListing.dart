@@ -17,6 +17,7 @@ class _AddListingState extends State<AddListing> {
 
   TextEditingController itemController = TextEditingController();
   TextEditingController itemController2 = TextEditingController();
+  TextEditingController itemController3 = TextEditingController();
 
   itemsService _itemsService = itemsService();
 
@@ -29,7 +30,7 @@ class _AddListingState extends State<AddListing> {
     if(profileImage != null){
       return CircleAvatar(
         backgroundImage: FileImage(File(profileImage!.path)),
-        radius: height * 0.08,
+        radius: height * 0.15,
       );
 
     }
@@ -37,13 +38,13 @@ class _AddListingState extends State<AddListing> {
       if (_pickImage != null){
         return CircleAvatar(
           backgroundImage: NetworkImage(_pickImage),
-          radius: height * 0.08,
+          radius: height * 0.15,
         );
       }
       else {
         return CircleAvatar(
-          backgroundImage: AssetImage("assets/images/eminem.jpg"),
-          radius: height * 0.08,
+          backgroundImage: AssetImage("assets/eminem.jpg"),
+          radius: height * 0.15,
         );
       }
     }
@@ -67,7 +68,7 @@ class _AddListingState extends State<AddListing> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: size.height * .4,
+
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.blue, width: 2),
@@ -79,7 +80,7 @@ class _AddListingState extends State<AddListing> {
                     children: [
                       TextField(
                           controller: itemController,
-                          maxLines: 2,
+                          maxLines: 1,
                           decoration: InputDecoration(
                             hintText: "Description",
                             enabledBorder: UnderlineInputBorder(
@@ -99,7 +100,7 @@ class _AddListingState extends State<AddListing> {
 
                       TextField(
                           controller: itemController2,
-                          maxLines: 2,
+                          maxLines: 1,
                           decoration: InputDecoration(
                             hintText: "Price",
                             enabledBorder: UnderlineInputBorder(
@@ -112,9 +113,30 @@ class _AddListingState extends State<AddListing> {
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                           )),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      TextField(
+                          controller: itemController3,
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: "Category",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                          )),
 
-                      Center(
-                        child: imagePlace(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Center(
+                          child: imagePlace(),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -152,7 +174,7 @@ class _AddListingState extends State<AddListing> {
               child: InkWell(
                 onTap: () {
                   _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text)
+                      .addItem(itemController.text, profileImage ?? "",itemController2.text,itemController3.text)
                       .then((value) {
                     Fluttertoast.showToast(
                         msg: "Your Item is Succesfully Listed",

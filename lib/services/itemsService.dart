@@ -16,17 +16,18 @@ class itemsService {
   String mediaUrl = "";
 
 
-  Future<item> addItem(String name,XFile pickedFile,String price)async{
+  Future<item> addItem(String name,XFile pickedFile,String price,String category)async{
     var ref = _firestore.collection("Items");
 
     mediaUrl = await _itemStorage.uploadMedia(File(pickedFile.path));
     var documentRef = await ref.add({
       "name": name,
       "image": mediaUrl,
-      "price": price
+      "price": price,
+      "category": category,
     });
 
-    return item(id: documentRef.id,name:name,image:mediaUrl,price: price);
+    return item(id: documentRef.id,name:name,image:mediaUrl,price: price,category: category);
   }
 
 
