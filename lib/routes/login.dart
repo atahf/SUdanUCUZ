@@ -88,6 +88,7 @@ class _LoginState extends State<Login> {
 
                       if (user != null) {
                         print("success");
+                        Navigator.pop(context);
                         Navigator.pushNamed(context, "/feedview");
                       }
 

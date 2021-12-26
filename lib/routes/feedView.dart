@@ -170,7 +170,7 @@ class _FeedViewState extends State<FeedView> {
 
               SizedBox(height: 20),
 
-                ItemList(),
+              ItemList(),
 
 
             ],

@@ -6,6 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "../routes/account.dart";
+import 'package:path/path.dart';
 
 class Bottom extends StatelessWidget {
   const Bottom({Key? key}) : super(key: key);
@@ -20,7 +21,27 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/feedview");
+              //Navigator.pop(context);
+
+              var route = ModalRoute.of(context);
+              print(route);
+              print("fsfsdfsdf");
+              if(route!=null) {
+                if ("/feedview" != route.settings.name) {
+                  Navigator.pushNamed(context, "/feedview");
+                }
+                else{
+                  Navigator.pop(context);
+                }
+              }
+              else{
+                Navigator.pushNamed(context, "/feedview");
+              }
+
+
+
+
+
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -89,6 +110,7 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
+              Navigator.pop(context);
               Navigator.pushNamed(context, "/profile");
             },
             child: Column(

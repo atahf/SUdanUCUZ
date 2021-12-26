@@ -6,6 +6,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "bottom.dart";
+import "signup.dart";
+import "package:project/services/db.dart";
 
 class User1{
   final String imagePath;
@@ -25,6 +27,7 @@ class UserPreferences{
   static const myUser = User1(
     imagePath: "assets/logo.png",
     name: "Harun Akçay",
+
     email: "meteharun@sabanciuniv.edu",
     about: "Sophomore / Computer Engineer\nYou can contact me if you want high grades in math exams :)",
   );
