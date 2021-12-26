@@ -25,7 +25,7 @@ class _ItemListState extends State<ItemList> {
       stream: _itemsService.getStatus(),
       builder: (context,snaphot){
         return !snaphot.hasData ? CircularProgressIndicator() : ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: snaphot.data!.docs.length,
           shrinkWrap: true,
           itemBuilder: (context,index){
