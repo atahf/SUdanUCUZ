@@ -25,9 +25,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: (){},
-        ),
+        leading: BackButton(),
 
         title: Text(
           "My Profile",

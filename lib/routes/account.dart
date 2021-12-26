@@ -48,6 +48,7 @@ class _AccountState extends State<Account> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
+
         title: Row(
           children: [
             SizedBox(width: 30),
