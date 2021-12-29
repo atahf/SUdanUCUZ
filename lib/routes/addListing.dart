@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -174,7 +175,7 @@ class _AddListingState extends State<AddListing> {
               child: InkWell(
                 onTap: () {
                   _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text,itemController3.text)
+                      .addItem(itemController.text, profileImage ?? "",itemController2.text,itemController3.text,FirebaseAuth.instance.currentUser!.uid)
                       .then((value) {
                     Fluttertoast.showToast(
                         msg: "Your Item is Succesfully Listed",

@@ -11,6 +11,8 @@ import "../routes/account.dart";
 class Editprofile extends StatefulWidget {
   const Editprofile({Key? key}) : super(key: key);
 
+
+
   @override
   _EditprofileState createState() => _EditprofileState();
 }
@@ -19,14 +21,29 @@ class _EditprofileState extends State<Editprofile> {
   TextEditingController itemController = TextEditingController();
   TextEditingController itemController2 = TextEditingController();
   TextEditingController itemController3 = TextEditingController();
-  User1 user = UserPreferences.myUser;
+
+  bool isEmpty(String s){
+    if (s.length == 0){
+      return true;
+    }
+    return false;
+  }
+
+  List<String> splitName(String s){
+    return s.split(" ");
+  }
+
+
+
 
   var currentUser = FirebaseAuth.instance.currentUser;
-  Future updateUserData(String name,String mail,String lname) async {
-    return await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).set({
-      "email": mail,
-      "lastName": name,
-      "userName": lname,
+
+  Future updateUserData(String name,String mail,String lname,String about) async {
+    return await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).set({
+      "mail": mail,
+      "lname": lname,
+      "name": name,
+      "about":about,
 
     });
   }
@@ -126,7 +143,7 @@ class _EditprofileState extends State<Editprofile> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: user.name, floatingLabelBehavior: FloatingLabelBehavior.never,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -151,7 +168,7 @@ class _EditprofileState extends State<Editprofile> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: user.email, floatingLabelBehavior: FloatingLabelBehavior.never,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -176,7 +193,7 @@ class _EditprofileState extends State<Editprofile> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    labelText: user.about, floatingLabelBehavior: FloatingLabelBehavior.never,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -190,7 +207,10 @@ class _EditprofileState extends State<Editprofile> {
                 SizedBox(height: 20,),
                 OutlinedButton(
                   onPressed: (){
-                    updateUserData(itemController3.text, itemController2.text,itemController.text );
+                    List<String> sl = splitName(itemController.text);
+
+
+                    updateUserData(sl[0], itemController2.text,sl[1],itemController3.text );
                     Navigator.pop(context);
                   },
                   child: Text("Submit"),

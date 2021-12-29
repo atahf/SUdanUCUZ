@@ -6,8 +6,9 @@ class item {
   String price;
   String image;
   String category;
+  String uid;
 
-  item({required this.id, required this.price,required this.image,required this.name,required this.category});
+  item({required this.id, required this.price,required this.image,required this.name,required this.category,required this.uid});
 
   factory item.fromSnapshot(DocumentSnapshot snapshot) {
     return item(
@@ -15,7 +16,8 @@ class item {
         price: snapshot["price"],
         image: snapshot["image"],
         name: snapshot["name"],
-        category: snapshot["category"]
+        category: snapshot["category"],
+        uid: snapshot["uid"],
     );
   }
 }

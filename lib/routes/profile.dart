@@ -115,7 +115,9 @@ class _ProfileState extends State<Profile> {
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Colors.amberAccent[400],
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/myproducts");
+                },
                 child: Row(
                   children: [
                     Icon(

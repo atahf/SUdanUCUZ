@@ -16,7 +16,7 @@ class itemsService {
   String mediaUrl = "";
 
 
-  Future<item> addItem(String name,XFile pickedFile,String price,String category)async{
+  Future<item> addItem(String name,XFile pickedFile,String price,String category,String uid)async{
     var ref = _firestore.collection("Items");
 
     mediaUrl = await _itemStorage.uploadMedia(File(pickedFile.path));
@@ -25,9 +25,10 @@ class itemsService {
       "image": mediaUrl,
       "price": price,
       "category": category,
+      "uid":uid,
     });
 
-    return item(id: documentRef.id,name:name,image:mediaUrl,price: price,category: category);
+    return item(id: documentRef.id,name:name,image:mediaUrl,price: price,category: category,uid: uid);
   }
 
 
@@ -43,6 +44,8 @@ class itemsService {
 
     return ref;
   }
+
+
 
   //status silmek için
   Future<void> removeStatus(String docId) {

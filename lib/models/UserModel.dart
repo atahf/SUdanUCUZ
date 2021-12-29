@@ -2,6 +2,7 @@ class User {
 
 
 
+
   final String name;
   final String about;
   final String mail;

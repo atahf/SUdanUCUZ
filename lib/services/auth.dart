@@ -27,7 +27,7 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: mail, password: pass);
       User user = result.user!;
 
-      await _firestore.collection("UserInfos").doc(user.uid).set({"userName": name,"email":mail,"lastName":lastName});
+      //await _firestore.collection("UserInfos").doc(user.uid).set({"userName": name,"email":mail,"lastName":lastName});
       //var list_name = new List.filled(3, null, growable: false);
 
       await DatabaseService(uid: user.uid).updateUserData("Add Something", name, mail, lastName);

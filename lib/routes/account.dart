@@ -10,30 +10,7 @@ import "bottom.dart";
 import "signup.dart";
 import "package:project/services/db.dart";
 
-class User1{
-  final String imagePath;
-  final String name;
-  final String email;
-  final String about;
 
-  const User1({
-    required this.imagePath,
-    required this.name,
-    required this.email,
-    required this.about,
-  });
-}
-
-class UserPreferences{
-  static const myUser = User1(
-    imagePath: "assets/logo.png",
-    name: "Harun Akçay",
-
-
-    email: "meteharun@sabanciuniv.edu",
-    about: "Sophomore / Computer Engineer\nYou can contact me if you want high grades in math exams :)",
-  );
-}
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
@@ -45,20 +22,22 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   String? name = "";
   String? mail = "";
+  String? about = "";
 
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
+
     var currentUser = FirebaseAuth.instance.currentUser;
 
 
     Future<void> setUserName() async{
-      var document = await FirebaseFirestore.instance.collection("UserInfos").doc(currentUser!.uid).get().then((DocumentSnapshot documentSnapshot) => documentSnapshot.data());
+      var document = await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).get();
 
-      List<String> s = document.toString().replaceAll(",", "").replaceAll("}", "").replaceAll("{", "").split(' ');
+
       setState(() {
-        name = s[3] + ' ' + s[1];
-        mail = s[5];
+        name = document.get("name")+" " + document.get("lname");
+        mail = document.get("mail");
+        about = document.get("about");
       });
     }
 
@@ -66,20 +45,7 @@ class _AccountState extends State<Account> {
 
 
 
-    Widget Texti(){
-      if (currentUser!= null){
-        return Text(
-            currentUser.uid,style: TextStyle(fontSize: 15,color: Colors.white,
-            fontWeight: FontWeight.bold)
-        );
-      }
-      else {
-        return Text(
-            "asdsadada",style: TextStyle(fontSize: 15,color: Colors.white,
-            fontWeight: FontWeight.bold)
-        );
-      }
-    }
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -126,12 +92,29 @@ class _AccountState extends State<Account> {
             ),
           ),
           SizedBox(height: 30),
-          buildName(User1(
-            name: name ?? UserPreferences.myUser.name,
-            email: mail ?? UserPreferences.myUser.email,
-            about: UserPreferences.myUser.about,
-            imagePath: UserPreferences.myUser.imagePath,
-          )),
+      Column(
+        children: [
+          Text(
+            name??"",
+            style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 9),
+          Row(
+            children: [
+              SizedBox(width: 90),
+              Icon(
+                Icons.email,
+                color: Colors.grey[400],
+              ),
+              SizedBox(width: 14),
+              Text(
+                mail??"",
+                style: TextStyle(color: Colors.grey[400]),
+              ),
+            ],
+          ),
+        ],
+      ),
           SizedBox(height: 30),
           //Center(),
           Row(
@@ -212,7 +195,11 @@ class _AccountState extends State<Account> {
                 ),
                 SizedBox(height:17),
 
-                Texti(),
+                Text(
+                  about??"",
+                  style: generalTextStyle,
+
+                ),
 
               ],
             ),
@@ -228,26 +215,3 @@ class _AccountState extends State<Account> {
   }
 }
 
-Widget buildName(User1 user) => Column(
-  children: [
-    Text(
-      user.name,
-      style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
-    ),
-    const SizedBox(height: 9),
-    Row(
-      children: [
-        SizedBox(width: 90),
-        Icon(
-          Icons.email,
-          color: Colors.grey[400],
-        ),
-        SizedBox(width: 14),
-        Text(
-          user.email,
-          style: TextStyle(color: Colors.grey[400]),
-        ),
-      ],
-    ),
-  ],
-);

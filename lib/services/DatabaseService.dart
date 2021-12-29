@@ -10,6 +10,7 @@ class DatabaseService {
 
 
   final CollectionReference UserCollection = FirebaseFirestore.instance.collection("UserProfile");
+  final CollectionReference ItemsCollection = FirebaseFirestore.instance.collection("Items");
 
 
   Future updateUserData(String about,String name,String mail,String lname) async {
@@ -19,6 +20,12 @@ class DatabaseService {
       "lname": lname,
       "about": about,
     });
+  }
+
+  Stream<QuerySnapshot> myItems() {
+    var ref = ItemsCollection.where("uid",isEqualTo: uid).snapshots();
+
+    return ref;
   }
 
 

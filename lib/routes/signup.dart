@@ -259,6 +259,7 @@ class _SignupState extends State<Signup> {
                       _formKey.currentState!.save();
 
                       authService.signupWithMailAndPass(mail, password, fname, lname);
+                      Navigator.pop(context);
 
                     }
                   },
