@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
+import 'package:project/models/ItemPage.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
 
@@ -34,7 +35,12 @@ class _ItemListState extends State<ItemList> {
             return Padding(
               padding: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ItemPage(iid: post.id)),
+                  );
+                },
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     horizontal:5,
