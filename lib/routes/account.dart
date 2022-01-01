@@ -197,7 +197,11 @@ class _AccountState extends State<Account> {
 
                 Text(
                   about??"",
-                  style: generalTextStyle,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
 
                 ),
 
