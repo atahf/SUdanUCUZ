@@ -40,7 +40,7 @@ class itemsService {
   }
 
   Stream<QuerySnapshot> getStatusSearch(String query) {
-    var ref = _firestore.collection("Items").where("price",isEqualTo: query).snapshots();
+    var ref = _firestore.collection("Items").where("name",isGreaterThanOrEqualTo: query).where("name",isLessThan: query +"z").snapshots();
 
     return ref;
   }
