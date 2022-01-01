@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/routes/CartView.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -76,7 +77,10 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
-              //Navigator.pushNamed(context, "/feedview");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartView()),
+              );
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

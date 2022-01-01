@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:project/routes/CartView.dart';
 import 'package:project/routes/addListing.dart';
 import 'package:project/routes/myProducts.dart';
 import 'package:project/services/auth.dart';
@@ -162,6 +163,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/notifications" : (context) => NotificationView(notifs: notifs),
                 "/map" : (context) => MapApp(),
                 "/myproducts" : (context) => MyProducts(analytics: analytics, observer: observer),
+                "/cartview" : (context) => CartView(),
               },
             ),
           ));

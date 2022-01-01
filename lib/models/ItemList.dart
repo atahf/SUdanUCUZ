@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:project/models/ItemPage.dart';
+import 'package:project/services/DatabaseService.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
 
@@ -18,6 +20,7 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
 
   itemsService _itemsService = itemsService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +119,9 @@ class _ItemListState extends State<ItemList> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(40,0,0,0),
                               child: OutlinedButton(
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}");
+                                  },
                                   child: Text("Add2Cart"),
                                   style: mainBstyle
                               ),
