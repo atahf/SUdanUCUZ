@@ -55,7 +55,7 @@ class Bottom extends StatelessWidget {
         BottomNavigationBarItem(
           icon: MaterialButton(
             onPressed: () {
-              //Navigator.pushNamed(context, "/feedview");
+              Navigator.pushNamed(context, "/favview");
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

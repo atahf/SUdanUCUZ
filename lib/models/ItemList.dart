@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
@@ -118,14 +119,52 @@ class _ItemListState extends State<ItemList> {
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                              child: IconButton(
+                                onPressed: (){
+                                  DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateFavData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}")
+                                      .then((value) {
+                                    Fluttertoast.showToast(
+                                        msg: "Succesfully added to Favorites",
+                                        timeInSecForIosWeb: 2,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: Colors.grey[600],
+                                        textColor: Colors.white,
+                                        fontSize: 14);
+
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.star,
+                                  color: Colors.blue,
+                                  size: 25,
+                                ),
+
+
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(40,0,0,0),
                               child: OutlinedButton(
                                   onPressed: (){
-                                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}");
+                                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}")
+                                        .then((value) {
+                                      Fluttertoast.showToast(
+                                          msg: "Succesfully added to Cart",
+                                          timeInSecForIosWeb: 2,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.grey[600],
+                                          textColor: Colors.white,
+                                          fontSize: 14);
+
+                                    });
                                   },
                                   child: Text("Add2Cart"),
                                   style: mainBstyle
                               ),
                             ),
+
                           ],
                         ),
                       ),

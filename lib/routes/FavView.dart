@@ -10,14 +10,14 @@ import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
 
 
-class CartView extends StatefulWidget {
-  const CartView({Key? key}) : super(key: key);
+class FavView extends StatefulWidget {
+  const FavView({Key? key}) : super(key: key);
 
   @override
-  _CartView createState() => _CartView();
+  _FavView createState() => _FavView();
 }
 
-class _CartView extends State<CartView> {
+class _FavView extends State<FavView> {
 
   itemsService _itemsService = itemsService();
   var currentUser = FirebaseAuth.instance.currentUser;
@@ -34,14 +34,14 @@ class _CartView extends State<CartView> {
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         title: Text(
-          "Cart",
+          "Favorites",
           style: appBarText,
         ),
         backgroundColor: Colors.grey[800],
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: DatabaseService(uid: currentUser!.uid ).getCart(),
+        stream: DatabaseService(uid: currentUser!.uid ).getFavs(),
         builder: (context,snaphot){
           return !snaphot.hasData ? CircularProgressIndicator() : ListView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -85,7 +85,7 @@ class _CartView extends State<CartView> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).removeFromCart(post.id);
+                                      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).removeFromFav(post.id);
                                       Navigator.pop(context);
                                     },
                                     child: Text(

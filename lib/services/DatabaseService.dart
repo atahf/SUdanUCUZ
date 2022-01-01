@@ -12,6 +12,8 @@ class DatabaseService {
   final CollectionReference UserCollection = FirebaseFirestore.instance.collection("UserProfile");
   final CollectionReference ItemsCollection = FirebaseFirestore.instance.collection("Items");
   final CollectionReference CartCollection = FirebaseFirestore.instance.collection("Cart");
+  final CollectionReference FavoriteCollection = FirebaseFirestore.instance.collection("Favorites");
+
 
 
   Future updateUserData(String about,String name,String mail,String lname) async {
@@ -33,6 +35,16 @@ class DatabaseService {
     });
   }
 
+  Future updateFavData(String iid,String category,String image,String name,String price) async {
+    return await FavoriteCollection.doc(uid).collection("items").doc(iid).set({
+      "category": category,
+      "name": name,
+      "price": price,
+      "image": image,
+      "uid": uid,
+    });
+  }
+
   Stream<QuerySnapshot> myItems() {
     var ref = ItemsCollection.where("uid",isEqualTo: uid).snapshots();
 
@@ -45,12 +57,24 @@ class DatabaseService {
     return ref;
   }
 
+  Stream<QuerySnapshot> getFavs() {
+    var ref = FavoriteCollection.doc(uid).collection("items").snapshots();
+
+    return ref;
+  }
+
 
 
 
 
   Future<void> removeFromCart(String docId) {
     var ref = CartCollection.doc(uid).collection("items").doc(docId).delete();
+
+    return ref;
+  }
+
+  Future<void> removeFromFav(String docId) {
+    var ref = FavoriteCollection.doc(uid).collection("items").doc(docId).delete();
 
     return ref;
   }
