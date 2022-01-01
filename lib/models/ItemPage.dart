@@ -24,6 +24,8 @@ class _ItemPageState extends State<ItemPage> {
   String? description = "";
   String? price = "";
   String? category = "";
+  String? seller = "";
+
 
 
   @override
@@ -32,6 +34,8 @@ class _ItemPageState extends State<ItemPage> {
 
     Future<void> setData() async{
       var document = await FirebaseFirestore.instance.collection("Items").doc(widget.iid).get();
+      var sName = await FirebaseFirestore.instance.collection("UserProfile").doc(document["uid"]).get();
+
 
 
       setState(() {
@@ -39,6 +43,7 @@ class _ItemPageState extends State<ItemPage> {
         description = document["name"];
         price = document["price"];
         category = document["category"];
+        seller = sName["name"] + " " + sName["lname"];
       });
     }
 
@@ -133,7 +138,7 @@ class _ItemPageState extends State<ItemPage> {
                     ),),
                   SizedBox(width: 14),
                   Text(
-                    "???????",
+                    seller!,
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                 ],

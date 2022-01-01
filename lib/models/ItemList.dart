@@ -145,7 +145,7 @@ class _ItemListState extends State<ItemList> {
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(40,0,0,0),
-                              child: OutlinedButton(
+                              child: TextButton.icon(
                                   onPressed: (){
                                     DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}")
                                         .then((value) {
@@ -160,8 +160,14 @@ class _ItemListState extends State<ItemList> {
 
                                     });
                                   },
-                                  child: Text("Add2Cart"),
-                                  style: mainBstyle
+                                  icon: Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.blue,
+                                    size: 33,
+                                  ),
+                                  label: Text("Add"),
+
+
                               ),
                             ),
 

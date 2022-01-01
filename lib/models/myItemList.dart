@@ -141,7 +141,7 @@ class _MyItemListState extends State<MyItemList> {
 
                       Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               "${post["price"]}",
@@ -152,7 +152,7 @@ class _MyItemListState extends State<MyItemList> {
                               textAlign: TextAlign.center,
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                              padding: const EdgeInsets.fromLTRB(10,0,0,0),
                               child: IconButton(
                                 onPressed: (){
                                   Navigator.push(
@@ -168,18 +168,23 @@ class _MyItemListState extends State<MyItemList> {
                                 icon: Icon(
                                   Icons.location_on_outlined,
                                   color: Colors.red,
-                                  size: 25,
+                                  size: 33,
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(40,0,0,0),
-                              child: OutlinedButton(
+                              padding: const EdgeInsets.fromLTRB(10,0,0,0),
+                              child: IconButton(
                                   onPressed: (){
                                     _askToRemove(context);
                                   },
-                                  child: Text("RemoveListing"),
-                                  style: mainBstyle
+                                icon: Icon(
+                                  Icons.restore_from_trash_outlined,
+                                  color: Colors.red,
+                                  size: 33,
+                                ),
+
+
                               ),
                             ),
                           ],
