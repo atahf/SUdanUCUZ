@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project/services/DatabaseService.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -9,8 +14,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "../routes/account.dart";
 
 class Editprofile extends StatefulWidget {
-  const Editprofile({Key? key}) : super(key: key);
+  const Editprofile({Key? key,required this.name,required this.mail,required this.pp,required this.about}) : super(key: key);
 
+  final String name;
+  final String about;
+  final String mail;
+  final String pp;
 
 
   @override
@@ -21,6 +30,9 @@ class _EditprofileState extends State<Editprofile> {
   TextEditingController itemController = TextEditingController();
   TextEditingController itemController2 = TextEditingController();
   TextEditingController itemController3 = TextEditingController();
+  var currentUser = FirebaseAuth.instance.currentUser;
+  File? pp;
+  String ProfilePicture = "";
 
   bool isEmpty(String s){
     if (s.length == 0){
@@ -33,13 +45,31 @@ class _EditprofileState extends State<Editprofile> {
     return s.split(" ");
   }
 
+  Future<void> uploadPp() async{
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      pp = File(image!.path);
+    });
+    var ref = FirebaseStorage.instance.ref().child("pp").child(currentUser!.uid);
+    var uploadTask = ref.putFile(pp!);
+    var url = await uploadTask;
+    setState(() async {
+      ProfilePicture = await url.ref.getDownloadURL();
+    });
+
+
+  }
 
 
 
-  var currentUser = FirebaseAuth.instance.currentUser;
+  Future<void> setPp() async {
+    await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).update({"pp":ProfilePicture});
+  }
+
+
 
   Future updateUserData(String name,String mail,String lname,String about) async {
-    return await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).set({
+    return await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).update({
       "mail": mail,
       "lname": lname,
       "name": name,
@@ -80,10 +110,9 @@ class _EditprofileState extends State<Editprofile> {
           Center(
             child: Stack(
               children: [
-                ClipOval(
-
-                  child: Image.asset("assets/eminem.jpg", fit: BoxFit.cover,
-                    width:128, height: 128,),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(widget.pp),
+                  radius: 64
                 ),
                 Positioned(
                   bottom: 1,
@@ -103,7 +132,7 @@ class _EditprofileState extends State<Editprofile> {
                           child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: (){
-                              //xxx
+                              uploadPp();
                             },
                             icon: Icon(
                               Icons.add_a_photo,
@@ -143,7 +172,7 @@ class _EditprofileState extends State<Editprofile> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-
+                    hintText: widget.name ,
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -168,7 +197,7 @@ class _EditprofileState extends State<Editprofile> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-
+                    hintText: widget.mail,
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -194,6 +223,7 @@ class _EditprofileState extends State<Editprofile> {
                     fillColor: Colors.white,
                     filled: true,
 
+                    hintText: widget.about,
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -211,6 +241,7 @@ class _EditprofileState extends State<Editprofile> {
 
 
                     updateUserData(sl[0], itemController2.text,sl[1],itemController3.text );
+                    setPp();
                     Navigator.pop(context);
                   },
                   child: Text("Submit"),

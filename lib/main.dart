@@ -159,7 +159,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/feedview": (context) => FeedView(analytics: analytics,observer: observer),
                 "/profile": (context) => Profile(),
                 "/account": (context) => Account(),
-                "/editprofile": (context) => Editprofile(),
+                //"/editprofile": (context) => Editprofile(),
                 "/settings" : (context) => Settings(),
                 "/addListing" : (context) => AddListing(),
                 "/notifications" : (context) => NotificationView(notifs: notifs),

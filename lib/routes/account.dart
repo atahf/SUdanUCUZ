@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/routes/editprofile.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -23,6 +24,7 @@ class _AccountState extends State<Account> {
   String? name = "";
   String? mail = "";
   String? about = "";
+  String? pp = "";
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,8 @@ class _AccountState extends State<Account> {
         name = document.get("name")+" " + document.get("lname");
         mail = document.get("mail");
         about = document.get("about");
+        pp = document.get("pp");
+
       });
     }
 
@@ -71,7 +75,10 @@ class _AccountState extends State<Account> {
 
           IconButton(
             onPressed: (){
-              Navigator.pushNamed(context, "/editprofile");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Editprofile(name:name!, mail: mail!, pp: pp!, about: about!)),
+              );
 
             },
             icon: Icon(
@@ -85,10 +92,9 @@ class _AccountState extends State<Account> {
         children: [
           SizedBox(height: 30),
           Center(
-            child: ClipOval(
-
-              child: Image.asset("assets/eminem.jpg", fit: BoxFit.cover,
-                width:128, height: 128,),
+            child: CircleAvatar(
+                backgroundImage: NetworkImage(pp!),
+                radius: 64
             ),
           ),
           SizedBox(height: 30),
