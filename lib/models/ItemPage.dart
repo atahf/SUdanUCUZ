@@ -27,7 +27,8 @@ class _ItemPageState extends State<ItemPage> {
   String? seller = "";
 
 
-
+  Color _favIconColor = Colors.grey;
+  Color _cartIconColor = Colors.grey;
   @override
   Widget build(BuildContext context) {
 
@@ -68,6 +69,58 @@ class _ItemPageState extends State<ItemPage> {
                 radius: 80,
               ),
             ),
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: [
+              SizedBox(width: 55),
+              IconButton(
+                icon: Icon(Icons.star),
+                iconSize: 50,
+                color: _favIconColor,
+                onPressed: () {
+                  setState(() {
+                    if(_favIconColor == Colors.grey){
+                      _favIconColor = Colors.amber;
+                    }else{
+                      _favIconColor = Colors.grey;
+                    }
+                  });
+                },
+              ),
+              SizedBox(width: 45),
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                iconSize: 50,
+                color: _cartIconColor,
+                onPressed: () {
+                  setState(() {
+                    if(_cartIconColor == Colors.grey){
+                      _cartIconColor = Colors.amber;
+                    }else{
+                      _cartIconColor = Colors.grey;
+                    }
+                  });
+                },
+              ),
+              SizedBox(width: 40),
+              MaterialButton(
+                onPressed: () {
+
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(
+                      Icons.comment,
+                      color: Colors.grey,
+                      size: 50,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 30),
           Column(
@@ -145,8 +198,43 @@ class _ItemPageState extends State<ItemPage> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 40),
 
+          Row(
+            children: [
+              SizedBox(width: 50),
+              RaisedButton(onPressed: () {},
+                  padding: EdgeInsets.all(15),
+                  color: Colors.amberAccent[400],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Text("Comments",
+                    style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold,
+                      color: Colors.grey[900],
+                    ),)
+              ),
+              SizedBox(width: 50),
+              RaisedButton(onPressed: () {},
+                  padding: EdgeInsets.all(15),
+                  color: Colors.amberAccent[400],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Text("Seller Info",
+                    style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold,
+                      color: Colors.grey[900],
+                    ),)
+              ),
+            ],
+          ),
+
+
+
+
+/*
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 20, 230, 20),
             child: FlatButton(
@@ -239,7 +327,7 @@ class _ItemPageState extends State<ItemPage> {
 
                   ],
                 )),
-          ),
+          ),*/
 
         ],
 

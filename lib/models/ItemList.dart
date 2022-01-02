@@ -113,7 +113,7 @@ class _ItemListState extends State<ItemList> {
                                   icon: Icon(
                                     Icons.location_on_outlined,
                                     color: Colors.red,
-                                    size: 25,
+                                    size: 33,
                                   ),
                               ),
                             ),
@@ -135,9 +135,9 @@ class _ItemListState extends State<ItemList> {
                                   });
                                 },
                                 icon: Icon(
-                                  Icons.star,
-                                  color: Colors.blue,
-                                  size: 25,
+                                  Icons.star_border,
+                                  color: Colors.grey[900],
+                                  size: 33,
                                 ),
 
 
@@ -161,11 +161,11 @@ class _ItemListState extends State<ItemList> {
                                     });
                                   },
                                   icon: Icon(
-                                    Icons.shopping_cart,
-                                    color: Colors.blue,
+                                    Icons.add_shopping_cart,
+                                    color: Colors.grey[900],
                                     size: 33,
                                   ),
-                                  label: Text("Add"),
+                                  label: Text(""),
 
 
                               ),
