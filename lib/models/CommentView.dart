@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/models/CommentModel.dart';
 import 'package:project/services/itemsService.dart';
 
 
@@ -40,60 +41,9 @@ class _CommentViewState extends State<CommentView> {
 
 
 
-            return Padding(
-              padding: EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: (){
 
 
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal:5,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal:10,vertical:15),
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.amberAccent[400],
-
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-
-                  child: Column(
-
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-
-                          Flexible(
-                            child: Text(
-                              "${post["comment"]}",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-
-                        ],
-
-                      ),
-
-
-
-
-
-
-                    ],
-                  ),
-
-                ),
-              ),
-            );
+            return CommentModel(post: post);
           },
         );
       },
