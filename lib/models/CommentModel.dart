@@ -24,19 +24,23 @@ class _CommentModelState extends State<CommentModel> {
 
   Future<void> setC() async {
     var doc = await FirebaseFirestore.instance.collection("UserProfile").doc(widget.post["user_id"]).get();
-    name = doc["name"] + " " +doc["lname"];
-    photo = doc["pp"];
-    print(name);
+
+    setState(() {
+      name =  doc["name"] + " " +doc["lname"];
+      photo =  doc["pp"];
+    });
   }
 
 
 
 
+
   @override
-  void initState() {
-    // TODO: implement initState
+  void initState(){
+
     super.initState();
-    setC();
+     setC();
+
   }
 
 

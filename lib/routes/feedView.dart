@@ -38,8 +38,7 @@ class _FeedViewState extends State<FeedView> {
   @override
   Widget build(BuildContext context) {
 
-    db.addUser('name', 'surname', 'mail', 'token');
-    db.addUserAutoID('nameAuto', 'surnameAuto', 'mail@auto', 'token');
+
 
 
 
