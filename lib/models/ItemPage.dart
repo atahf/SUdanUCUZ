@@ -210,7 +210,12 @@ class _ItemPageState extends State<ItemPage> {
           Row(
             children: [
               SizedBox(width: 50),
-              RaisedButton(onPressed: () {},
+              RaisedButton(onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Comments(iid: widget.iid)),
+                );
+              },
                   padding: EdgeInsets.all(15),
                   color: Colors.amberAccent[400],
                   shape: RoundedRectangleBorder(

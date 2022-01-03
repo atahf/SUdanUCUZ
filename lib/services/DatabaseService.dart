@@ -24,7 +24,9 @@ class DatabaseService {
       "name": name,
       "lname": lname,
       "about": about,
-      "pp": "",
+      "pp": "https://firebasestorage.googleapis.com/v0/b/sudanucuz-2e0a6.appspot.com/o/indir.jpg?alt=media&token=f2b65994-b332-444a-bc54-4b6697cf84c3",
+      "total_sale": 0,
+      "rating": 0.0
     });
   }
 

@@ -20,6 +20,11 @@ class CommentView extends StatefulWidget {
 }
 
 class _CommentViewState extends State<CommentView> {
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -34,10 +39,12 @@ class _CommentViewState extends State<CommentView> {
 
 
 
+
             return Padding(
               padding: EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: (){
+
 
                 },
                 child: Container(
