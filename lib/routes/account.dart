@@ -25,6 +25,8 @@ class _AccountState extends State<Account> {
   String mail = "";
   String about = "";
   String pp = "";
+  String total_sale = "";
+  String rating = "";
 
 
   var currentUser = FirebaseAuth.instance.currentUser;
@@ -38,6 +40,9 @@ class _AccountState extends State<Account> {
       mail = document.get("mail");
       about = document.get("about");
       pp = document.get("pp");
+      total_sale = document.get("total_sale").toString();
+      rating = document.get("rating").toString();
+
 
     });
   }
@@ -142,7 +147,7 @@ class _AccountState extends State<Account> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "4.9",
+                      rating,
                       style: TextStyle(color: Colors.amberAccent[200],
                           fontSize: 25,fontWeight: FontWeight.bold),
                     ),
@@ -164,7 +169,7 @@ class _AccountState extends State<Account> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "13",
+                      total_sale,
                       style: TextStyle(color: Colors.amberAccent[200],
                           fontSize: 25,fontWeight: FontWeight.bold),
                     ),

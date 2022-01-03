@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +9,8 @@ import 'package:project/models/ItemPage.dart';
 import 'package:project/services/DatabaseService.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 
 
 class PreviousOrderList extends StatefulWidget {
@@ -21,20 +24,24 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
 
   itemsService _itemsService = itemsService();
   var currentUser = FirebaseAuth.instance.currentUser;
+  double rating = 0;
 
 
   List<DocumentSnapshot> data = [];
 
 
   Future<void> getPrevOrders()async {
+    //Transactionlar içinde kullanıcıya ait olan satın alımları çekiyorum.
     var document = await FirebaseFirestore.instance.collection("Transactions").where("buyer_uid",isEqualTo: currentUser!.uid).get();
 
+    // Bu satın alımlarda hangi id'li itemin alındığı bilgisini buluyorum.
     List<String> itemList = [];
     for(var doc in document.docs){
       itemList.add(doc.get("item_id"));
 
     }
 
+    // Bu itemlerin datasını teker teker çekiyorum.
     for(String s in itemList){
       DocumentSnapshot doc = await FirebaseFirestore.instance.collection("Items").doc(s).get();
       setState(() {
@@ -58,11 +65,42 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
 
 
 
-  Future<void> addComment(String iid,String comment) async{
+  Future<void> addComment(String iid,String comment,double rating) async{
+    //Comment, commenti kimin attığı ve verilen ratingi database'e gönderiyorum.
     await FirebaseFirestore.instance.collection("Comments").doc(iid).collection("all").add({
       "comment":comment,
       "user_id":currentUser!.uid,
+      "rating": rating
     });
+
+    //Comments klasörünün içindeki her bir item'ın rating ve total değişkeni olmasını sağlıyorum.
+    var doc = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();
+    if(!doc.data()!.containsKey("total")){
+      await FirebaseFirestore.instance.collection("Comments").doc(iid).set({
+        "total" : 0,
+        "rating" : 0
+      });
+    }
+
+    //Verilen ratinge göre itemin ratingini ve toplam kaç kişinin oyladığını güncelliyorum.
+    var doc1 = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();
+    int ttl = doc1.get("total")+1;
+    var rate = (doc1.get("rating")*(ttl-1)+rating)/ttl;
+    await FirebaseFirestore.instance.collection("Comments").doc(iid).update({"total":ttl});
+    await FirebaseFirestore.instance.collection("Comments").doc(iid).update({"rating":rate});
+
+    
+  }
+  
+  Future<void> updateSellerProfile(String uid) async{
+    // Seller'ın datasını çekiyorum ve gerekli güncellemeleri yapıyorum.
+    var document = await FirebaseFirestore.instance.collection("UserProfile").doc(uid).get();
+    int sale = document.get("total_sale")+1;
+    var rate = (document.get("rating")*(sale-1)+rating)/sale;
+    await FirebaseFirestore.instance.collection("UserProfile").doc(uid).update({"total_sale":sale});
+    await FirebaseFirestore.instance.collection("UserProfile").doc(uid).update({"rating":rate});
+
+
   }
 
 
@@ -84,9 +122,20 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                    title: Text(
-                      "Please enter your comment.",
-                      textAlign: TextAlign.center,
+                    title: Column(
+                      children: [
+                        Text(
+                          "Rate the Product.",
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 10,),
+                        buildRating(),
+
+                        Text(
+                          "Please enter your comment.",
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                     shape: RoundedRectangleBorder(
                         borderRadius:
@@ -98,7 +147,8 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
                     MaterialButton(
                         onPressed: (){
 
-                          addComment(iid, control.text);
+                          addComment(iid, control.text,rating);
+                          updateSellerProfile(post["uid"]);
                           Navigator.pop(context);
                         },
                       elevation: 5,
@@ -219,4 +269,18 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
       },
     );
   }
+  Widget buildRating(){
+    return RatingBar.builder(
+        minRating: 1,
+        itemSize: 30,
+        itemPadding: EdgeInsets.symmetric(horizontal: 1),
+        itemBuilder: (context,_)=>Icon(Icons.star,color: Colors.amber),
+        onRatingUpdate: (rating) => setState(() {
+          this.rating = rating;
+          print(this.rating);
+        })
+    );
+  }
 }
+
+
