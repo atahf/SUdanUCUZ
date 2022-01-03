@@ -25,8 +25,8 @@ class _AccountState extends State<Account> {
   String mail = "";
   String about = "";
   String pp = "";
-  String total_sale = "";
-  String rating = "";
+  String total_sale = "0";
+  String rating = "0";
 
 
   var currentUser = FirebaseAuth.instance.currentUser;
@@ -41,7 +41,7 @@ class _AccountState extends State<Account> {
       about = document.get("about");
       pp = document.get("pp");
       total_sale = document.get("total_sale").toString();
-      rating = document.get("rating").toString();
+      rating = document.get("rating").toStringAsFixed(1);
 
 
     });

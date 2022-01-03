@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:project/routes/Comments.dart';
 
 import "../routes/bottom.dart";
@@ -27,6 +28,8 @@ class _ItemPageState extends State<ItemPage> {
   String? price = "";
   String? category = "";
   String? seller = "";
+  double rating = 0;
+  int votes = 0;
 
 
   Color _favIconColor = Colors.grey;
@@ -38,6 +41,7 @@ class _ItemPageState extends State<ItemPage> {
     Future<void> setData() async{
       var document = await FirebaseFirestore.instance.collection("Items").doc(widget.iid).get();
       var sName = await FirebaseFirestore.instance.collection("UserProfile").doc(document["uid"]).get();
+      var ratingGet = await FirebaseFirestore.instance.collection("Comments").doc(widget.iid).get();
 
 
 
@@ -47,6 +51,8 @@ class _ItemPageState extends State<ItemPage> {
         price = document["price"];
         category = document["category"];
         seller = sName["name"] + " " + sName["lname"];
+        rating = ratingGet["rating"];
+        votes = ratingGet["total"];
       });
     }
 
@@ -208,40 +214,47 @@ class _ItemPageState extends State<ItemPage> {
           SizedBox(height: 40),
 
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 50),
-              RaisedButton(onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Comments(iid: widget.iid)),
-                );
-              },
-                  padding: EdgeInsets.all(15),
-                  color: Colors.amberAccent[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: Text("Comments",
-                    style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold,
-                      color: Colors.grey[900],
-                    ),)
+
+              RatingBarIndicator(
+                rating: rating,
+                itemBuilder: (context, index) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                itemCount: 5,
+                itemSize: 50.0,
+                direction: Axis.horizontal,
               ),
-              SizedBox(width: 50),
-              RaisedButton(onPressed: () {},
-                  padding: EdgeInsets.all(15),
-                  color: Colors.amberAccent[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: Text("Seller Info",
-                    style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold,
-                      color: Colors.grey[900],
-                    ),)
+              SizedBox(width: 20,),
+              Text(
+                rating.toStringAsFixed(1),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
+
+
+            ],
+          ),
+          SizedBox(height: 15,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "$votes Votes",
+                style: TextStyle(
+
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
               ),
             ],
           ),
+
 
 
 
