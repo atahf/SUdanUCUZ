@@ -183,12 +183,15 @@ class _FavView extends State<FavView> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(40,0,0,0),
-                                child: OutlinedButton(
+                                child: IconButton(
                                     onPressed: (){
                                       _askToRemove(context);
                                     },
-                                    child: Text("sil"),
-                                    style: mainBstyle
+                                    icon: Icon(
+                                      Icons.delete
+                                    ),
+                                  color: Colors.red,
+                                  iconSize: 33,
                                 ),
                               ),
                             ],

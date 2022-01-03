@@ -21,31 +21,40 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String? name = "";
-  String? mail = "";
-  String? about = "";
-  String? pp = "";
+  String name = "";
+  String mail = "";
+  String about = "";
+  String pp = "";
+
+
+  var currentUser = FirebaseAuth.instance.currentUser;
+
+  Future<void> setUserName() async{
+    var document = await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).get();
+
+
+    setState(() {
+      name = document.get("name")+" " + document.get("lname");
+      mail = document.get("mail");
+      about = document.get("about");
+      pp = document.get("pp");
+
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setUserName();
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    var currentUser = FirebaseAuth.instance.currentUser;
 
 
-    Future<void> setUserName() async{
-      var document = await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).get();
 
 
-      setState(() {
-        name = document.get("name")+" " + document.get("lname");
-        mail = document.get("mail");
-        about = document.get("about");
-        pp = document.get("pp");
-
-      });
-    }
-
-    setUserName();
 
 
 
@@ -77,7 +86,7 @@ class _AccountState extends State<Account> {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Editprofile(name:name!, mail: mail!, pp: pp!, about: about!)),
+                MaterialPageRoute(builder: (context) => Editprofile(name:name, mail: mail, pp: pp, about: about)),
               );
 
             },
@@ -93,7 +102,7 @@ class _AccountState extends State<Account> {
           SizedBox(height: 30),
           Center(
             child: CircleAvatar(
-                backgroundImage: NetworkImage(pp!),
+                backgroundImage: NetworkImage(pp),
                 radius: 64
             ),
           ),
@@ -101,7 +110,7 @@ class _AccountState extends State<Account> {
       Column(
         children: [
           Text(
-            name??"",
+            name,
             style: TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 9),
@@ -114,7 +123,7 @@ class _AccountState extends State<Account> {
               ),
               SizedBox(width: 14),
               Text(
-                mail??"",
+                mail,
                 style: TextStyle(color: Colors.grey[400]),
               ),
             ],
@@ -202,7 +211,7 @@ class _AccountState extends State<Account> {
                 SizedBox(height:17),
 
                 Text(
-                  about??"",
+                  about,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

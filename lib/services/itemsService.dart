@@ -44,6 +44,12 @@ class itemsService {
 
     return ref;
   }
+  
+  Stream<QuerySnapshot> getComments(String iid) {
+    var ref = _firestore.collection("Comments").doc(iid).collection("all").snapshots();
+
+    return ref;
+  }
 
 
 

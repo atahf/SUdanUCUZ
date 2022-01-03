@@ -22,6 +22,8 @@ class _CartView extends State<CartView> {
   itemsService _itemsService = itemsService();
   var currentUser = FirebaseAuth.instance.currentUser;
   int total = 0;
+  List<String> seller_list = [];
+  List<String> item_list = [];
 
 
   Future<void> getTotal() async{
@@ -33,14 +35,26 @@ class _CartView extends State<CartView> {
           pr = pr.substring(0,pr.length-1);
           var i = int.parse(pr);
           total += i ;
-          
-
+          seller_list.add(doc.get("uid"));
+          item_list.add(doc.reference.id);
         });
-
-
-
     }
+  }
 
+  Future<void> makeTransaction() async{
+    for(int x = 0; x < item_list.length;x++){
+      await FirebaseFirestore.instance.collection("Transactions").add({
+        "buyer_uid": currentUser!.uid,
+        "seller_uid": seller_list[x],
+        "item_id": item_list[x],
+        "comment": "",
+        "rate":0,
+      });
+    }
+  }
+
+  Future<void> deleteCart() async{
+    await FirebaseFirestore.instance.collection("Cart").doc(currentUser!.uid).delete();
   }
   
   @override
@@ -216,12 +230,15 @@ class _CartView extends State<CartView> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(40,0,0,0),
-                                    child: OutlinedButton(
-                                        onPressed: (){
-                                          _askToRemove(context);
-                                        },
-                                        child: Text("sil"),
-                                        style: mainBstyle
+                                    child: IconButton(
+                                      onPressed: (){
+                                        _askToRemove(context);
+                                      },
+                                      icon: Icon(
+                                          Icons.delete
+                                      ),
+                                      color: Colors.red,
+                                      iconSize: 33,
                                     ),
                                   ),
                                 ],
@@ -268,7 +285,10 @@ class _CartView extends State<CartView> {
 
                 children: [
                   InkWell(
-                    onTap:(){} ,
+                    onTap:(){
+                      makeTransaction();
+                      deleteCart();
+                    } ,
 
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

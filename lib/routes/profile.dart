@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/PreviousOrdersList.dart';
+import 'package:project/routes/PreviousOrders.dart';
 import 'package:project/routes/addListing.dart';
 import 'package:project/routes/bottom.dart';
 import '../services/auth.dart';
@@ -165,7 +167,12 @@ class _ProfileState extends State<Profile> {
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Colors.amberAccent[400],
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PreviousOrders()),
+                  );
+                },
                 child: Row(
                   children: [
                     Icon(

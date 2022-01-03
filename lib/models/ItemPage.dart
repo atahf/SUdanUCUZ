@@ -1,4 +1,6 @@
 import 'dart:ffi';
+import 'package:project/routes/Comments.dart';
+
 import "../routes/bottom.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +108,11 @@ class _ItemPageState extends State<ItemPage> {
               SizedBox(width: 40),
               MaterialButton(
                 onPressed: () {
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Comments(iid: widget.iid)),
+                  );
 
                 },
                 child: Column(

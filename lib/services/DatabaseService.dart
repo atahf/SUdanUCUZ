@@ -13,6 +13,8 @@ class DatabaseService {
   final CollectionReference ItemsCollection = FirebaseFirestore.instance.collection("Items");
   final CollectionReference CartCollection = FirebaseFirestore.instance.collection("Cart");
   final CollectionReference FavoriteCollection = FirebaseFirestore.instance.collection("Favorites");
+  final CollectionReference TransactionCollection = FirebaseFirestore.instance.collection("Transactions");
+
 
 
 
@@ -22,16 +24,17 @@ class DatabaseService {
       "name": name,
       "lname": lname,
       "about": about,
+      "pp": "",
     });
   }
 
-  Future updateCartData(String iid,String category,String image,String name,String price) async {
+  Future updateCartData(String iid,String category,String image,String name,String price,String id) async {
     return await CartCollection.doc(uid).collection("items").doc(iid).set({
       "category": category,
       "name": name,
       "price": price,
       "image": image,
-      "uid": uid,
+      "uid": id,
     });
   }
 
@@ -63,6 +66,8 @@ class DatabaseService {
     return ref;
   }
 
+   
+
 
 
 
@@ -82,5 +87,7 @@ class DatabaseService {
   Stream<QuerySnapshot> get users {
     return UserCollection.snapshots();
   }
+
+
 
 }
