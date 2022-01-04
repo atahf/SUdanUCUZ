@@ -190,21 +190,25 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
 
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+
                     crossAxisAlignment: CrossAxisAlignment.start,
 
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(post["image"]),
-                        radius: size.height* 0.08,
+                        radius: 70,
                       ),
                       Flexible(
-                        child: Text(
-                          "${post["name"]}",
-                          style: TextStyle(
-                            fontSize: 16,
+                        child: Center(
+                          child: Text(
+                              "${post["name"]}\n\n${post["price"]}",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500
+                              ),
+                              textAlign: TextAlign.center
+
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
 
@@ -216,30 +220,11 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          "${post["price"]}",
-                          style: TextStyle(
-                            fontSize: 16,
 
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10,0,0,0),
-                          child: IconButton(
-                            onPressed: (){
-
-                            },
-                            icon: Icon(
-                              Icons.star_rate_rounded,
-                              color: Colors.black,
-                              size: 33,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10,0,0,0),
-                          child: IconButton(
+                          child: TextButton.icon(
                             onPressed: (){
 
                               _askToComment(context,post.id);
@@ -249,6 +234,7 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
                               color: Colors.black,
                               size: 33,
                             ),
+                            label: Text("Review",style: TextStyle(color: Colors.black),),
 
 
                           ),

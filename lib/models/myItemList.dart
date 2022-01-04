@@ -117,21 +117,25 @@ class _MyItemListState extends State<MyItemList> {
 
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+
                         crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(post["image"]),
-                            radius: size.height* 0.08,
+                            radius: 70,
                           ),
                           Flexible(
-                            child: Text(
-                              "${post["name"]}",
-                              style: TextStyle(
-                                fontSize: 16,
+                            child: Center(
+                              child: Text(
+                                  "${post["name"]}\n\n${post["price"]}",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500
+                                  ),
+                                  textAlign: TextAlign.center
+
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
 
@@ -143,14 +147,7 @@ class _MyItemListState extends State<MyItemList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              "${post["price"]}",
-                              style: TextStyle(
-                                fontSize: 16,
 
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10,0,0,0),
                               child: IconButton(
@@ -179,7 +176,7 @@ class _MyItemListState extends State<MyItemList> {
                                     _askToRemove(context);
                                   },
                                 icon: Icon(
-                                  Icons.restore_from_trash_outlined,
+                                  Icons.delete_forever,
                                   color: Colors.red,
                                   size: 33,
                                 ),

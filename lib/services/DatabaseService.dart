@@ -40,13 +40,13 @@ class DatabaseService {
     });
   }
 
-  Future updateFavData(String iid,String category,String image,String name,String price) async {
+  Future updateFavData(String iid,String category,String image,String name,String price,String id) async {
     return await FavoriteCollection.doc(uid).collection("items").doc(iid).set({
       "category": category,
       "name": name,
       "price": price,
       "image": image,
-      "uid": uid,
+      "uid": id,
     });
   }
 

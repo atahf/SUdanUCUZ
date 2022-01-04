@@ -126,21 +126,25 @@ class _FavView extends State<FavView> {
 
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+
                           crossAxisAlignment: CrossAxisAlignment.start,
 
                           children: [
                             CircleAvatar(
                               backgroundImage: NetworkImage(post["image"]),
-                              radius: size.height* 0.08,
+                              radius: 70,
                             ),
                             Flexible(
-                              child: Text(
-                                "${post["name"]}",
-                                style: TextStyle(
-                                  fontSize: 16,
+                              child: Center(
+                                child: Text(
+                                    "${post["name"]}\n\n${post["price"]}",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500
+                                    ),
+                                    textAlign: TextAlign.center
+
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ),
 
@@ -150,18 +154,11 @@ class _FavView extends State<FavView> {
 
                         Expanded(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                "${post["price"]}",
-                                style: TextStyle(
-                                  fontSize: 16,
 
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                                padding: const EdgeInsets.fromLTRB(20,0,0,0),
                                 child: IconButton(
                                   onPressed: (){
                                     Navigator.push(
@@ -177,12 +174,12 @@ class _FavView extends State<FavView> {
                                   icon: Icon(
                                     Icons.location_on_outlined,
                                     color: Colors.red,
-                                    size: 25,
+                                    size: 33,
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(40,0,0,0),
+                                padding: const EdgeInsets.fromLTRB(20,0,0,0),
                                 child: IconButton(
                                     onPressed: (){
                                       _askToRemove(context);
