@@ -4,10 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
+import 'package:project/models/FavList.dart';
 import 'package:project/models/ItemPage.dart';
+import 'package:project/routes/addListing.dart';
 import 'package:project/services/DatabaseService.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
+
+import 'bottom.dart';
 
 
 class FavView extends StatefulWidget {
@@ -33,182 +37,63 @@ class _FavView extends State<FavView> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text(
-          "Favorites",
-          style: appBarText,
-        ),
         backgroundColor: Colors.grey[800],
-        centerTitle: true,
+
+
+        title: Row(
+          children: [
+            SizedBox(width: 75),
+            Text("Favorites",style: appBarText,),
+
+            SizedBox(width: 95),
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/settings");
+              },
+              icon: Icon(
+                  Icons.settings
+              ),
+            ),
+          ],
+        ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: DatabaseService(uid: currentUser!.uid ).getFavs(),
-        builder: (context,snaphot){
-          return !snaphot.hasData ? CircularProgressIndicator() : ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: snaphot.data!.docs.length,
-            shrinkWrap: true,
-            itemBuilder: (context,index){
-              DocumentSnapshot post = snaphot.data!.docs[index];
-
-              Future<void> _askToRemove(BuildContext context) {
-                return showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: Text(
-                            "Are you sure?",
-                            textAlign: TextAlign.center,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(8.0))),
-                          content: Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {
-
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).removeFromFav(post.id);
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                      "Remove",
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              )));
-                    });
-              }
-
-              return Padding(
-                padding: EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ItemPage(iid: post.id)),
-                    );
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal:5,
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal:10,vertical:15),
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.amberAccent[400],
-
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-
-                    child: Column(
-
-                      children: [
-                        Row(
-
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(post["image"]),
-                              radius: 70,
-                            ),
-                            Flexible(
-                              child: Center(
-                                child: Text(
-                                    "${post["name"]}\n\n${post["price"]}",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500
-                                    ),
-                                    textAlign: TextAlign.center
-
-                                ),
-                              ),
-                            ),
-
-                          ],
-
-                        ),
-
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(20,0,0,0),
-                                child: IconButton(
-                                  onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => MapApp(
-                                        camPosition: LatLng(40.889550,29.374065),
-                                        title: "${post["name"]}",
-                                        price: "${post["price"]}",
-                                      )),
-                                      //TODO have to add LatLng values to each item
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.location_on_outlined,
-                                    color: Colors.red,
-                                    size: 33,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(20,0,0,0),
-                                child: IconButton(
-                                    onPressed: (){
-                                      _askToRemove(context);
-                                    },
-                                    icon: Icon(
-                                      Icons.delete
-                                    ),
-                                  color: Colors.red,
-                                  iconSize: 33,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
 
 
 
-                      ],
-                    ),
 
-                  ),
+                  ],
                 ),
-              );
-            },
-          );
-        },
+              ),
 
+              SizedBox(height: 20),
+
+              FavList(),
+
+            ],
+          ),
+        ),
       ),
+      bottomNavigationBar: Bottom(),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddListing()));
+        },
+        child: Icon(Icons.add),
+      ),
+
     );
   }
 }
