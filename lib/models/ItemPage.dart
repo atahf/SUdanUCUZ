@@ -38,33 +38,44 @@ class _ItemPageState extends State<ItemPage> {
   int votes = 0;
   String seller_id = "";
 
+  Future<void> setData() async{
+    var document = await FirebaseFirestore.instance.collection("Items").doc(widget.iid).get();
+    var sName = await FirebaseFirestore.instance.collection("UserProfile").doc(document["uid"]).get();
+    var ratingGet = await FirebaseFirestore.instance.collection("Comments").doc(widget.iid).get();
+
+    setState(() {
+      image = document["image"];
+      description = document["name"];
+      price = document["price"];
+      category = document["category"];
+      seller = sName["name"] + " " + sName["lname"];
+      rating = ratingGet["rating"].toDouble();
+      votes = ratingGet["total"];
+      seller_id = document["uid"];
+    });
+  }
+
+
+
 
   Color _favIconColor = Colors.grey;
   Color _cartIconColor = Colors.grey;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setData();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
 
-    Future<void> setData() async{
-      var document = await FirebaseFirestore.instance.collection("Items").doc(widget.iid).get();
-      var sName = await FirebaseFirestore.instance.collection("UserProfile").doc(document["uid"]).get();
-      var ratingGet = await FirebaseFirestore.instance.collection("Comments").doc(widget.iid).get();
 
 
 
-      setState(() {
-        image = document["image"];
-        description = document["name"];
-        price = document["price"];
-        category = document["category"];
-        seller = sName["name"] + " " + sName["lname"];
-        rating = ratingGet["rating"];
-        votes = ratingGet["total"];
-        seller_id = document["uid"];
-      });
-    }
-
-    setData();
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -163,9 +174,11 @@ class _ItemPageState extends State<ItemPage> {
                     fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(width: 14),
-                  Text(
-                    description!,
-                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 24),
+                  Flexible(
+                    child: Text(
+                      description!,
+                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                   ),
                 ],
               ),

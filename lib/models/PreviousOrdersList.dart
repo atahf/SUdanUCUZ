@@ -75,12 +75,12 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
 
     //Comments klasörünün içindeki her bir item'ın rating ve total değişkeni olmasını sağlıyorum.
     var doc = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();
-    if(!doc.data()!.containsKey("total")){
+    /*if(!doc.data()!.containsKey("total")){
       await FirebaseFirestore.instance.collection("Comments").doc(iid).set({
         "total" : 0,
         "rating" : 0
       });
-    }
+    }*/
 
     //Verilen ratinge göre itemin ratingini ve toplam kaç kişinin oyladığını güncelliyorum.
     var doc1 = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();

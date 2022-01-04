@@ -27,6 +27,10 @@ class itemsService {
       "category": category,
       "uid":uid,
     });
+    await FirebaseFirestore.instance.collection("Comments").doc(documentRef.id).set({
+      "total" : 0,
+      "rating" : 0
+    });
 
     return item(id: documentRef.id,name:name,image:mediaUrl,price: price,category: category,uid: uid);
   }

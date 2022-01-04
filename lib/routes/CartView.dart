@@ -21,7 +21,7 @@ class _CartView extends State<CartView> {
 
   itemsService _itemsService = itemsService();
   var currentUser = FirebaseAuth.instance.currentUser;
-  int total = 0;
+  double total = 0;
   List<String> seller_list = [];
   List<String> item_list = [];
 
@@ -33,7 +33,7 @@ class _CartView extends State<CartView> {
         setState(() {
           String pr = doc.get("price");
           pr = pr.substring(0,pr.length-1);
-          var i = int.parse(pr);
+          var i = double.parse(pr);
           total += i ;
           seller_list.add(doc.get("uid"));
           item_list.add(doc.reference.id);
