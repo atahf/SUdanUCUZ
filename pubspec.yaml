@@ -47,6 +47,7 @@ dependencies:
   firebase_messaging: ^11.2.4
   flutter_local_notifications: ^9.1.5
   google_maps_flutter: ^2.1.1
+  google_maps_place_picker_mb: ^2.0.0-mb.13
   flutter_rating_bar: ^4.0.0
 
 

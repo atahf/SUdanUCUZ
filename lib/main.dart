@@ -29,7 +29,7 @@ import 'routes/addListing.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'models/notifications.dart';
 import 'routes/mapView.dart';
-
+import 'services/location_picker.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -167,6 +167,7 @@ class _MyFirebaseAppState extends State<MyFirebaseApp> {
                 "/myproducts" : (context) => MyProducts(analytics: analytics, observer: observer),
                 "/cartview" : (context) => CartView(),
                 "/favview" : (context) => FavView(),
+                "/pickLocation" : (context) => PickLoc(),
               },
             ),
           ));
