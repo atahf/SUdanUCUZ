@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
@@ -65,7 +66,22 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
 
 
 
-  Future<void> addComment(String iid,String comment,double rating) async{
+  Future addComment(String iid,String comment,double rating) async{
+    
+    var doc = await FirebaseFirestore.instance.collection("Comments").doc(iid).collection("all").where("user_id", isEqualTo:currentUser!.uid ).get();
+
+    //Kullanıcı daha önce aynı ürünü değerlendirmiş diye kontrol ediyorum, eğer değerlendirmişse uyarı veriyorum.
+    if (doc.docs.isNotEmpty){
+      return Fluttertoast.showToast(
+          msg: "You've already rated this product.",
+          timeInSecForIosWeb: 2,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.grey[600],
+          textColor: Colors.white,
+          fontSize: 14);
+    }
+    
     //Comment, commenti kimin attığı ve verilen ratingi database'e gönderiyorum.
     await FirebaseFirestore.instance.collection("Comments").doc(iid).collection("all").add({
       "comment":comment,
@@ -74,7 +90,7 @@ class _PreviousOrderListState extends State<PreviousOrderList> {
     });
 
     //Comments klasörünün içindeki her bir item'ın rating ve total değişkeni olmasını sağlıyorum.
-    var doc = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();
+    //var doc = await FirebaseFirestore.instance.collection("Comments").doc(iid).get();
     /*if(!doc.data()!.containsKey("total")){
       await FirebaseFirestore.instance.collection("Comments").doc(iid).set({
         "total" : 0,

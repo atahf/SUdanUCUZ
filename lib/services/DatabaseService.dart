@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/models/UserModel.dart';
 
 
@@ -31,13 +33,40 @@ class DatabaseService {
   }
 
   Future updateCartData(String iid,String category,String image,String name,String price,String id) async {
-    return await CartCollection.doc(uid).collection("items").doc(iid).set({
-      "category": category,
-      "name": name,
-      "price": price,
-      "image": image,
-      "uid": id,
-    });
+
+    var doc = await ItemsCollection.doc(iid).get();
+    //Ürün kullanıcının kendi ürünü mü diye kontrol ediyorum.
+    if (doc["uid"] == uid){
+      return Fluttertoast.showToast(
+          msg: "You cannot buy your own item.",
+          timeInSecForIosWeb: 2,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.grey[600],
+          textColor: Colors.white,
+          fontSize: 14);
+    }
+    else {
+      return await CartCollection.doc(uid).collection("items").doc(iid).set({
+        "category": category,
+        "name": name,
+        "price": price,
+        "image": image,
+        "uid": id,
+      }).then((value) {
+        Fluttertoast.showToast(
+            msg: "Succesfully added to Cart",
+            timeInSecForIosWeb: 2,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.grey[600],
+            textColor: Colors.white,
+            fontSize: 14);
+
+      });
+    }
+
+
   }
 
   Future updateFavData(String iid,String category,String image,String name,String price,String id) async {

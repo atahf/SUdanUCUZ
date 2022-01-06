@@ -145,18 +145,8 @@ class _ItemListState extends State<ItemList> {
                               padding: const EdgeInsets.fromLTRB(20,0,0,0),
                               child: TextButton.icon(
                                   onPressed: (){
-                                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}","${post["uid"]}")
-                                        .then((value) {
-                                      Fluttertoast.showToast(
-                                          msg: "Succesfully added to Cart",
-                                          timeInSecForIosWeb: 2,
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          backgroundColor: Colors.grey[600],
-                                          textColor: Colors.white,
-                                          fontSize: 14);
+                                    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).updateCartData(post.id,post["category"] , post["image"], "${post["name"]}", "${post["price"]}","${post["uid"]}");
 
-                                    });
                                   },
                                   icon: Icon(
                                     Icons.add_shopping_cart,
