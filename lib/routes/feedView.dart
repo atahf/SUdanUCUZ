@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/models/categoryModel.dart';
 import 'package:project/models/searchView.dart';
 import 'package:project/routes/addListing.dart';
 import 'package:provider/provider.dart';
@@ -183,7 +184,10 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 20,),
+
+
+
 
               ItemList(),
 
