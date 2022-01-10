@@ -12,7 +12,9 @@ import 'package:project/routes/mapView.dart';
 
 
 class ItemList extends StatefulWidget {
-  const ItemList({Key? key}) : super(key: key);
+  const ItemList({Key? key,required this.category}) : super(key: key);
+
+  final String category;
 
   @override
   _ItemListState createState() => _ItemListState();
@@ -23,11 +25,12 @@ class _ItemListState extends State<ItemList> {
   itemsService _itemsService = itemsService();
 
 
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return StreamBuilder<QuerySnapshot>(
-      stream: _itemsService.getStatus(),
+      stream: _itemsService.getStatus(widget.category),
       builder: (context,snaphot){
         return !snaphot.hasData ? CircularProgressIndicator() : ListView.builder(
           physics: NeverScrollableScrollPhysics(),

@@ -20,6 +20,8 @@ class _AddListingState extends State<AddListing> {
   TextEditingController itemController = TextEditingController();
   TextEditingController itemController2 = TextEditingController();
   TextEditingController itemController3 = TextEditingController();
+  List<String> categories = ["Electronics","Fashion","Book","Art","Craft","Outdoor"];
+  String? category;
 
   itemsService _itemsService = itemsService();
 
@@ -117,23 +119,15 @@ class _AddListingState extends State<AddListing> {
                             ),
                           )),
                       SizedBox(
-                        height: 6,
+                        height: 10,
                       ),
-                      TextField(
-                          controller: itemController3,
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            hintText: "Category",
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                          )),
+                      DropdownButton<String>(
+                        hint: Text("Please select a category"),
+                        value: category,
+                          isExpanded: true,
+                          items: categories.map(buildMenuItem).toList(),
+                        onChanged: (value) => setState(() => category = value),
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
@@ -177,7 +171,7 @@ class _AddListingState extends State<AddListing> {
               child: InkWell(
                 onTap: () {
                   _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text,itemController3.text,FirebaseAuth.instance.currentUser!.uid)
+                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid)
                       .then((value) {
                     Fluttertoast.showToast(
                         msg: "Your Item is Succesfully Listed",
@@ -230,5 +224,16 @@ class _AddListingState extends State<AddListing> {
         print("Image Error: " + _pickImage);
       });
     }
+  }
+
+
+  DropdownMenuItem<String> buildMenuItem(String item){
+    return DropdownMenuItem(
+      value: item,
+        child: Text(
+          item,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+    );
   }
 }

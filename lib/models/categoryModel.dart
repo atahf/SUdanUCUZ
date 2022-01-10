@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Cmodel extends StatefulWidget {
@@ -12,11 +13,28 @@ class Cmodel extends StatefulWidget {
 class _CmodelState extends State<Cmodel> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 25,
-      width: 35,
-      child: Text(
-        widget.cname,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          border: Border.all(
+            color: Colors.blue,
+          ),
+          borderRadius: BorderRadius.circular(12),
+
+        ),
+        height: 25,
+        width: 125,
+        child: Center(
+          child: Text(
+            widget.cname,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+
+            ),
+          ),
+        ),
       ),
     );
   }

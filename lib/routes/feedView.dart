@@ -29,6 +29,7 @@ class _FeedViewState extends State<FeedView> {
   DBService db = DBService();
   int notifNumber = 0;
   Notifications notifs = Notifications();
+  String category = "all";
 
   @override
   void setState(VoidCallback fn) {
@@ -184,12 +185,31 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 50,
+
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  children: [
+                    InkWell(child: Cmodel( cname: 'All',),onTap: (){setState(() {category = "all";});},),
+                    InkWell(child: Cmodel( cname: 'Electronics',),onTap: (){setState(() {category = "Electronics";});},),
+                    InkWell(child: Cmodel( cname: 'Fashion',),onTap: (){setState(() {category = "Fashion";});},),
+                    InkWell(child: Cmodel( cname: 'Outdoor',),onTap: (){setState(() {category = "Outdoor";});},),
+                    InkWell(child: Cmodel( cname: 'Art',),onTap: (){setState(() {category = "Art";});},),
+                    InkWell(child: Cmodel( cname: 'Craft',),onTap: (){setState(() {category = "Craft";});},),
+                    InkWell(child: Cmodel( cname: 'Book',),onTap: (){setState(() {category = "Book";});},),
+
+                  ],
+                ),
+              ),
 
 
 
 
-              ItemList(),
+
+              ItemList(category: category,),
 
 
             ],

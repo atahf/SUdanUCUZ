@@ -37,10 +37,17 @@ class itemsService {
 
 
   //status göstermek için
-  Stream<QuerySnapshot> getStatus() {
-    var ref = _firestore.collection("Items").snapshots();
+  Stream<QuerySnapshot> getStatus(String s) {
+    if (s == "all"){
+      var ref = _firestore.collection("Items").snapshots();
 
-    return ref;
+      return ref;
+    }
+    else {
+      var ref = _firestore.collection("Items").where("category",isEqualTo: s).snapshots();
+
+      return ref;
+    }
   }
 
   Stream<QuerySnapshot> getStatusSearch(String query) {
