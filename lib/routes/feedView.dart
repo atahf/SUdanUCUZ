@@ -13,8 +13,8 @@ import 'package:project/models/ItemList.dart';
 import 'package:project/models/notifications.dart';
 
 class FeedView extends StatefulWidget {
-
-   FeedView({Key? key, required this.analytics, required this.observer}) : super(key: key);
+  FeedView({Key? key, required this.analytics, required this.observer})
+      : super(key: key);
   final FirebaseAnalytics analytics;
   final FirebaseAnalyticsObserver observer;
 
@@ -30,6 +30,15 @@ class _FeedViewState extends State<FeedView> {
   int notifNumber = 0;
   Notifications notifs = Notifications();
   String category = "all";
+  List<String> colors = [
+    "orange",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue"
+  ];
 
   @override
   void setState(VoidCallback fn) {
@@ -39,11 +48,6 @@ class _FeedViewState extends State<FeedView> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -65,9 +69,7 @@ class _FeedViewState extends State<FeedView> {
               onPressed: () {
                 Navigator.pushNamed(context, "/settings");
               },
-              icon: Icon(
-                  Icons.settings
-              ),
+              icon: Icon(Icons.settings),
             ),
           ],
         ),
@@ -88,23 +90,21 @@ class _FeedViewState extends State<FeedView> {
                       decoration: BoxDecoration(
                         color: Colors.grey[400],
                         borderRadius: BorderRadius.circular(15),
-
                       ),
-                      child:
-                        TextField(
-                          controller: control,
-                          decoration:  InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: "Search",
-                            prefixIcon: Icon(Icons.search, color: Colors.grey[800]),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 9,
-                            ),
+                      child: TextField(
+                        controller: control,
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          hintText: "Search",
+                          prefixIcon:
+                              Icon(Icons.search, color: Colors.grey[800]),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 9,
                           ),
                         ),
-
+                      ),
                     ),
                     Container(
                       //padding: EdgeInsets.all(12),
@@ -116,11 +116,12 @@ class _FeedViewState extends State<FeedView> {
                       ),
                       child: IconButton(
                         color: Colors.amberAccent[400],
-
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SearchView(query: control)),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SearchView(query: control)),
                           );
                         },
                         icon: Icon(
@@ -146,12 +147,11 @@ class _FeedViewState extends State<FeedView> {
                             ),
                             child: IconButton(
                               color: Colors.amberAccent[400],
-
                               onPressed: () {
                                 Navigator.pushNamed(context, "/notifications");
                               },
                               icon: Icon(
-                                  Icons.notifications,
+                                Icons.notifications,
                               ),
                               iconSize: 30,
                               padding: EdgeInsets.zero,
@@ -175,60 +175,107 @@ class _FeedViewState extends State<FeedView> {
                               ),
                             ),
                           ),*/
-
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ),
-
               SizedBox(
                 height: 50,
-
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   children: [
-                    InkWell(child: Cmodel( cname: 'All',),onTap: (){setState(() {category = "all";});},),
-                    InkWell(child: Cmodel( cname: 'Electronics',),onTap: (){setState(() {category = "Electronics";});},),
-                    InkWell(child: Cmodel( cname: 'Fashion',),onTap: (){setState(() {category = "Fashion";});},),
-                    InkWell(child: Cmodel( cname: 'Outdoor',),onTap: (){setState(() {category = "Outdoor";});},),
-                    InkWell(child: Cmodel( cname: 'Art',),onTap: (){setState(() {category = "Art";});},),
-                    InkWell(child: Cmodel( cname: 'Craft',),onTap: (){setState(() {category = "Craft";});},),
-                    InkWell(child: Cmodel( cname: 'Book',),onTap: (){setState(() {category = "Book";});},),
-
+                    InkWell(
+                      child: Cmodel(cname: 'All', color: colors[0]),
+                      onTap: () {
+                        setState(() {
+                          category = "all";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[0] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Electronics', color: colors[1]),
+                      onTap: () {
+                        setState(() {
+                          category = "Electronics";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[1] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Fashion', color: colors[2]),
+                      onTap: () {
+                        setState(() {
+                          category = "Fashion";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[2] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Outdoor', color: colors[3]),
+                      onTap: () {
+                        setState(() {
+                          category = "Outdoor";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[3] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Art', color: colors[4]),
+                      onTap: () {
+                        setState(() {
+                          category = "Art";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[4] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Craft', color: colors[5]),
+                      onTap: () {
+                        setState(() {
+                          category = "Craft";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[5] = "orange";
+                        });
+                      },
+                    ),
+                    InkWell(
+                      child: Cmodel(cname: 'Book', color: colors[6]),
+                      onTap: () {
+                        setState(() {
+                          category = "Book";
+                          colors[colors.indexOf("orange")] = "blue";
+                          colors[6] = "orange";
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
-
-
-
-
-
-              ItemList(category: category,),
-
-
+              ItemList(
+                category: category,
+              ),
             ],
-
-
-
           ),
         ),
       ),
       bottomNavigationBar: Bottom(),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddListing()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddListing()));
         },
         child: Icon(Icons.add),
       ),
-
     );
   }
 }
