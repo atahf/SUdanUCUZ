@@ -56,7 +56,10 @@ class _CartView extends State<CartView> {
   String currentTotal(double total) => "Total: "+ total.toStringAsFixed(2) +"\$";
 
   Future<void> deleteCart() async{
-    await FirebaseFirestore.instance.collection("Cart").doc(currentUser!.uid).delete();
+    var doc = await FirebaseFirestore.instance.collection("Cart").doc(currentUser!.uid).collection("items").get();
+    for(var singleDoc in doc.docs){
+      singleDoc.reference.delete();
+    }
   }
 
   @override
@@ -261,66 +264,72 @@ class _CartView extends State<CartView> {
             ),
                 SizedBox(height: 25,),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      currentTotal(total),
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
 
-                      ),
-                    ),
-
-
-                  ],
-                ),
-
-
-             SizedBox(height: 20,),
-             Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-                    InkWell(
-                      onTap:(){
-                        makeTransaction();
-                        deleteCart();
-                      } ,
-
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blue, width: 2),
-                              //color: colorPrimaryShade,
-                              borderRadius: BorderRadius.all(Radius.circular(30))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Center(
-                                child: Text(
-                                  "Proceed to Buy",
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 20,
-                                  ),
-                                )),
-                          ),
-                        ),
-                      ),
-
-                    ),
-                  ],
-                )
 
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 75,
+        decoration: BoxDecoration(
+          color:Colors.grey[800] ,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+             children: [
+               Padding(
+                 padding: const EdgeInsets.only(left: 25),
+                 child: Text(
+                     "${currentTotal(total)}",
+                   style: TextStyle(
+                     color: Colors.blue,
+                     fontSize: 18,
+                     fontWeight: FontWeight.bold
+                   ),
+                 ),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(right: 25),
+                 child: InkWell(
+                   onTap: (){
+                     makeTransaction();
+                     deleteCart();
+                     setState(() {
+                       total = 0;
+                     });
+
+                   },
+                   child: Container(
+                     height: 50,
+                     width: 150,
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.all(Radius.circular(30)),
+                       color: Colors.deepOrange,
+
+                     ),
+                     child: Center(
+                         child: Text(
+                           "Check Out",
+                           style: TextStyle(
+                             color: Colors.white,
+                             fontSize: 18,
+                           ),
+                         )
+                     ),
+                   ),
+                 ),
+               ),
+
+             ],
+           ),
+          ],
+        ),
+      ) ,
 
     );
   }

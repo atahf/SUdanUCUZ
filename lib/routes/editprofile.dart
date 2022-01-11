@@ -53,8 +53,9 @@ class _EditprofileState extends State<Editprofile> {
     var ref = FirebaseStorage.instance.ref().child("pp").child(currentUser!.uid);
     var uploadTask = ref.putFile(pp!);
     var url = await uploadTask;
-    setState(() async {
-      ProfilePicture = await url.ref.getDownloadURL();
+    var res = await url.ref.getDownloadURL();
+    setState(() {
+      ProfilePicture = res;
     });
 
 
@@ -63,7 +64,11 @@ class _EditprofileState extends State<Editprofile> {
 
 
   Future<void> setPp() async {
-    await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).update({"pp":ProfilePicture});
+
+    if (ProfilePicture != ""){
+      await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).update({"pp":ProfilePicture});
+    }
+
   }
 
 

@@ -120,13 +120,14 @@ class _AccountState extends State<Account> {
           ),
           const SizedBox(height: 9),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 90),
+
               Icon(
                 Icons.email,
                 color: Colors.grey[400],
               ),
-              SizedBox(width: 14),
+
               Text(
                 mail,
                 style: TextStyle(color: Colors.grey[400]),
@@ -182,32 +183,14 @@ class _AccountState extends State<Account> {
                 ),
               ),
               SizedBox(width: 8),
-              MaterialButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "25",
-                      style: TextStyle(color: Colors.amberAccent[200],
-                          fontSize: 25,fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height:5),
-                    Text(
-                      "Purchases",
-                      style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
+
             ],
           ),
           SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("About",
                     style: TextStyle(fontSize: 25,color: Colors.grey[400],

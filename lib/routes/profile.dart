@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/PreviousOrdersList.dart';
 import 'package:project/routes/PreviousOrders.dart';
@@ -22,6 +23,26 @@ class Profile extends StatefulWidget {
 
 
 class _ProfileState extends State<Profile> {
+
+  String pp = "";
+  var currentUser = FirebaseAuth.instance.currentUser;
+
+  Future getPp () async{
+    var doc = await FirebaseFirestore.instance.collection("UserProfile").doc(currentUser!.uid).get();
+
+    setState(() {
+      pp = doc["pp"];
+    });
+
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +91,7 @@ class _ProfileState extends State<Profile> {
               fit: StackFit.expand,
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage("assets/eminem.jpg"),
+                  backgroundImage: NetworkImage(pp),
                 ),
                 SizedBox(
                   height: 46,

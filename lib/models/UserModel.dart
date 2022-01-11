@@ -139,32 +139,14 @@ class _SellerProfileState extends State<SellerProfile> {
                 ),
               ),
               SizedBox(width: 8),
-              MaterialButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "25",
-                      style: TextStyle(color: Colors.amberAccent[200],
-                          fontSize: 25,fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height:5),
-                    Text(
-                      "Purchases",
-                      style: TextStyle(fontSize: 15,color: Colors.grey[400],fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
+
             ],
           ),
           SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("About",
                     style: TextStyle(fontSize: 25,color: Colors.grey[400],
