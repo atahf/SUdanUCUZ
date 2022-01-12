@@ -27,9 +27,9 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
-  TextEditingController itemController = TextEditingController();
-  TextEditingController itemController2 = TextEditingController();
-  TextEditingController itemController3 = TextEditingController();
+  TextEditingController? itemController;
+  TextEditingController? itemController2;
+  TextEditingController? itemController3;
   var currentUser = FirebaseAuth.instance.currentUser;
   File? pp;
   String ProfilePicture = "";
@@ -81,6 +81,14 @@ class _EditprofileState extends State<Editprofile> {
       "about":about,
 
     });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    itemController = TextEditingController(text: widget.name);
+    itemController2 = TextEditingController(text: widget.mail);
+    itemController3 = TextEditingController(text: widget.about);
   }
 
 
@@ -173,11 +181,12 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+
                   controller: itemController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: widget.name ,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -198,11 +207,12 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+
                   controller: itemController2,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: widget.mail,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -223,12 +233,13 @@ class _EditprofileState extends State<Editprofile> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+
                   controller: itemController3,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
 
-                    hintText: widget.about,
+
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.yellow,
@@ -242,10 +253,10 @@ class _EditprofileState extends State<Editprofile> {
                 SizedBox(height: 20,),
                 OutlinedButton(
                   onPressed: (){
-                    List<String> sl = splitName(itemController.text);
+                    List<String> sl = splitName(itemController!.text);
 
 
-                    updateUserData(sl[0], itemController2.text,sl[1],itemController3.text );
+                    updateUserData(sl[0], itemController2!.text,sl[1],itemController3!.text );
                     setPp();
                     Navigator.pop(context);
                   },

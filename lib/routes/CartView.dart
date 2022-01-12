@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:project/models/ItemPage.dart';
+import 'package:project/routes/OrderDone.dart';
 import 'package:project/services/DatabaseService.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
@@ -302,6 +303,10 @@ class _CartView extends State<CartView> {
                      setState(() {
                        total = 0;
                      });
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => OrderDone()),
+                     );
 
                    },
                    child: Container(
