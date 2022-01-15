@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/models/PreviousOrdersList.dart';
+import 'package:project/models/myCommentsList.dart';
+import 'package:project/routes/MyComments.dart';
 import 'package:project/routes/PreviousOrders.dart';
 import 'package:project/routes/addListing.dart';
 import 'package:project/routes/bottom.dart';
@@ -165,6 +167,10 @@ class _ProfileState extends State<Profile> {
                 color: Colors.amberAccent[400],
                 onPressed: () {
 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyComments()),
+                  );
                 },
                 child: Row(
                   children: [

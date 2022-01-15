@@ -79,6 +79,8 @@ class DatabaseService {
     });
   }
 
+
+
   Stream<QuerySnapshot> myItems() {
     var ref = ItemsCollection.where("uid",isEqualTo: uid).snapshots();
 
@@ -118,6 +120,16 @@ class DatabaseService {
   Stream<QuerySnapshot> get users {
     return UserCollection.snapshots();
   }
+
+
+  Stream<QuerySnapshot> getMyComments() {
+    var ref = UserCollection.doc(uid).collection("Comments").snapshots();
+
+    return ref;
+  }
+
+
+
 
 
 
