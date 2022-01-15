@@ -43,6 +43,8 @@ class _EditItemState extends State<EditItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    // Edit yapmanın daha kolay olması için var olan bilgileri gerekli yerlere atıyorum.
     itemController = TextEditingController(text: widget.name);
     category = widget.category;
     itemController2 = TextEditingController(text: widget.price);
@@ -51,6 +53,7 @@ class _EditItemState extends State<EditItem> {
 
   Future updateItem()async{
 
+    // Eğer item için yeni bir fotoğraf yüklendiyse bu fotoğrafı submit changes'e tıklandığında database'e yükleyip itemi güncelliyorum.
     if (profileImage != null){
       var ref = await FirebaseStorage.instance.ref().child("itemPp").child(widget.itemId);
       var uploadTask = await ref.putFile(File(profileImage!.path));
@@ -65,6 +68,7 @@ class _EditItemState extends State<EditItem> {
       });
     }
     else {
+      // Eğer yeni bir fotoğraf yüklenmediyse mevcut bilgilerle güncelliyorum, aynı foto kalıyor.
       await FirebaseFirestore.instance.collection("Items").doc(widget.itemId).update({
         "name": itemController!.text,
         "price":itemController2!.text,
@@ -251,6 +255,7 @@ class _EditItemState extends State<EditItem> {
   }
 
   Widget ImagePut(){
+    // Eğer yeni bir foto yüklendiyse o fotonun ekranda hemen gözükmesini sağlıyorum.
     if (profileImage != null){
       return CircleAvatar(
         backgroundImage: FileImage(File(profileImage!.path)),
@@ -258,6 +263,7 @@ class _EditItemState extends State<EditItem> {
       );
     }
     else {
+      // Eğer foto eklenmediyse eski foto gözüksün.
       return CircleAvatar(
         backgroundImage: NetworkImage(widget.image),
         radius: 100,
