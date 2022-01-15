@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/design/Dimensions.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:project/models/ItemPage.dart';
+import 'package:project/routes/editItem.dart';
 import 'package:project/services/DatabaseService.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:project/routes/mapView.dart';
@@ -177,6 +178,24 @@ class _MyItemListState extends State<MyItemList> {
                                   },
                                 icon: Icon(
                                   Icons.delete_forever,
+                                  color: Colors.red,
+                                  size: 33,
+                                ),
+
+
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10,0,0,0),
+                              child: IconButton(
+                                onPressed: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditItem(name: post["name"], price: post["price"], category: post["category"], image: post["image"], itemId: post.id)),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.edit,
                                   color: Colors.red,
                                   size: 33,
                                 ),

@@ -1,71 +1,88 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/services/itemsService.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
-class AddListing extends StatefulWidget {
-  const AddListing({Key? key}) : super(key: key);
+class EditItem extends StatefulWidget {
+   const EditItem({Key? key,required this.name,required this.price,required this.category,required this.image,required this.itemId}) : super(key: key);
+
+  final String category;
+  final String name;
+  final String price;
+  final String image;
+  final String itemId;
+
+
+
 
   @override
-  _AddListingState createState() => _AddListingState();
+  _EditItemState createState() => _EditItemState();
 }
 
-class _AddListingState extends State<AddListing> {
+class _EditItemState extends State<EditItem> {
 
-  TextEditingController itemController = TextEditingController();
-  TextEditingController itemController2 = TextEditingController();
-  TextEditingController itemController3 = TextEditingController();
+  TextEditingController? itemController;
+
+  TextEditingController? itemController2;
+
   List<String> categories = ["Electronics","Fashion","Book","Art","Craft","Outdoor"];
   String? category;
 
-  itemsService _itemsService = itemsService();
+
 
   final ImagePicker _pickerImage = ImagePicker();
   dynamic _pickImage;
-  var  profileImage;
+  var  profileImage ;
 
-  Widget imagePlace(){
-    double height = MediaQuery.of(context).size.height;
-    if(profileImage != null){
-      return CircleAvatar(
-        backgroundImage: FileImage(File(profileImage!.path)),
-        radius: height * 0.15,
-      );
 
-    }
-    else {
-      if (_pickImage != null){
-        return CircleAvatar(
-          backgroundImage: NetworkImage(_pickImage),
-          radius: height * 0.15,
-        );
-      }
-      else {
-        return CircleAvatar(
-          backgroundImage: AssetImage("assets/eminem.jpg"),
-          radius: height * 0.15,
-        );
-      }
-    }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    itemController = TextEditingController(text: widget.name);
+    category = widget.category;
+    itemController2 = TextEditingController(text: widget.price);
   }
 
 
+  Future updateItem()async{
 
+    if (profileImage != null){
+      var ref = await FirebaseStorage.instance.ref().child("itemPp").child(widget.itemId);
+      var uploadTask = await ref.putFile(File(profileImage!.path));
+      var url = await uploadTask;
+      var res = await url.ref.getDownloadURL();
 
+      await FirebaseFirestore.instance.collection("Items").doc(widget.itemId).update({
+        "name": itemController!.text,
+        "price":itemController2!.text,
+        "category": category,
+        "image": res,
+      });
+    }
+    else {
+      await FirebaseFirestore.instance.collection("Items").doc(widget.itemId).update({
+        "name": itemController!.text,
+        "price":itemController2!.text,
+        "category": category,
+        "image": widget.image,
+      });
+    }
+
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-          title: Text("List Your Item"),
+          title: Text("Edit Your Item"),
+          centerTitle: true,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,15 +141,17 @@ class _AddListingState extends State<AddListing> {
                       DropdownButton<String>(
                         hint: Text("Please select a category"),
                         value: category,
-                          isExpanded: true,
-                          items: categories.map(buildMenuItem).toList(),
+                        isExpanded: true,
+                        items: categories.map(buildMenuItem).toList(),
                         onChanged: (value) => setState(() => category = value),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Center(
-                          child: imagePlace(),
+                          child: ClipOval(
+                            child: ImagePut(),
+                          ),
                         ),
                       ),
                       Row(
@@ -170,20 +189,11 @@ class _AddListingState extends State<AddListing> {
               padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 25),
               child: InkWell(
                 onTap: () {
-                  _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid)
-                      .then((value) {
-                    Fluttertoast.showToast(
-                        msg: "Your Item is Succesfully Listed",
-                        timeInSecForIosWeb: 2,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: Colors.grey[600],
-                        textColor: Colors.white,
-                        fontSize: 14);
-                    Navigator.pop(context);
-                  });
-                },
+
+                  updateItem();
+                  Navigator.pop(context);
+                  },
+
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   decoration: BoxDecoration(
@@ -194,7 +204,7 @@ class _AddListingState extends State<AddListing> {
                     padding: const EdgeInsets.all(5.0),
                     child: Center(
                         child: Text(
-                          "List it",
+                          "Confirm Changes",
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 20,
@@ -207,6 +217,9 @@ class _AddListingState extends State<AddListing> {
           ],
         ));
   }
+
+
+
 
   void _onImageButtonPressed(ImageSource source,
       {required BuildContext context}) async {
@@ -230,10 +243,25 @@ class _AddListingState extends State<AddListing> {
   DropdownMenuItem<String> buildMenuItem(String item){
     return DropdownMenuItem(
       value: item,
-        child: Text(
-          item,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+      child: Text(
+        item,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
+  }
+
+  Widget ImagePut(){
+    if (profileImage != null){
+      return CircleAvatar(
+        backgroundImage: FileImage(File(profileImage!.path)),
+        radius: 100,
+      );
+    }
+    else {
+      return CircleAvatar(
+        backgroundImage: NetworkImage(widget.image),
+        radius: 100,
+      );
+    }
   }
 }
