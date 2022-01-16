@@ -36,6 +36,7 @@ class _SearchView2State extends State<SearchView2> {
     // TODO: implement initState
     super.initState();
     fillData();
+    print(widget.query.text);
   }
 
   @override

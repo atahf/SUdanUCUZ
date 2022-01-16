@@ -26,10 +26,11 @@ class itemsService {
       "price": price,
       "category": category,
       "uid":uid,
+      "pricen": makeItDouble(price),
     });
     await FirebaseFirestore.instance.collection("Comments").doc(documentRef.id).set({
       "total" : 0,
-      "rating" : 0
+      "rating" : 0,
     });
 
     return item(id: documentRef.id,name:name,image:mediaUrl,price: price,category: category,uid: uid);
@@ -37,16 +38,40 @@ class itemsService {
 
 
   //status göstermek için
-  Stream<QuerySnapshot> getStatus(String s) {
+  Stream<QuerySnapshot> getStatus(String s,String order) {
     if (s == "all"){
-      var ref = _firestore.collection("Items").snapshots();
+      if (order == "n"){
+        var ref = _firestore.collection("Items").snapshots();
 
-      return ref;
+        return ref;
+      }
+      else if (order == "a"){
+        var ref = _firestore.collection("Items").orderBy("pricen",descending: false).snapshots();
+
+        return ref;
+      }
+      else {
+        var ref = _firestore.collection("Items").orderBy("pricen",descending: true).snapshots();
+
+        return ref;
+      }
     }
     else {
-      var ref = _firestore.collection("Items").where("category",isEqualTo: s).snapshots();
+      if (order == "n"){
+        var ref = _firestore.collection("Items").where("category",isEqualTo: s).snapshots();
 
-      return ref;
+        return ref;
+      }
+      else if (order == "a"){
+        var ref = _firestore.collection("Items").where("category",isEqualTo: s).orderBy("pricen",descending: false).snapshots();
+
+        return ref;
+      }
+      else {
+        var ref = _firestore.collection("Items").where("category",isEqualTo: s).orderBy("pricen",descending: true).snapshots();
+
+        return ref;
+      }
     }
   }
 
@@ -86,6 +111,12 @@ class itemsService {
 
   bool contains(String a, String b){
     return  b.toLowerCase().replaceAll(" ", "").contains(a.toLowerCase().replaceAll(" ", ""));
+  }
+  
+  double makeItDouble(String pr){
+    String ps = pr.substring(0,pr.length-1);
+    var i = double.parse(ps);
+    return i;
   }
 
 

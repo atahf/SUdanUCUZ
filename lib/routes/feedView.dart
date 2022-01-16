@@ -31,6 +31,8 @@ class _FeedViewState extends State<FeedView> {
   int notifNumber = 0;
   Notifications notifs = Notifications();
   String category = "all";
+  String orderBy = "n";
+  String asdes = "up";
   List<String> colors = [
     "orange",
     "blue",
@@ -262,8 +264,48 @@ class _FeedViewState extends State<FeedView> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 25,
+                    ),
+                    Icon(
+                      Icons.filter_alt_sharp,
+                      size: 25,
+                      color: Colors.blue,
+                    ),
+                    Text(
+                        "Order By",
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
+
+                    TextButton.icon(
+                        onPressed: () {
+                          setState(() {
+
+                            if (asdes == "up"){
+                              asdes = "down";
+                              orderBy = "d";
+                            }
+                            else {
+                              asdes = "up";
+                              orderBy = "a";
+                            }
+                          });
+                        },
+                        icon: trueIcon(asdes),
+                        label: Text("Price"))
+                  ],
+                ),
+              ),
               ItemList(
                 category: category,
+                order: orderBy,
               ),
             ],
           ),
@@ -278,5 +320,13 @@ class _FeedViewState extends State<FeedView> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Widget trueIcon(String a) {
+    if (a == "up") {
+      return Icon(Icons.arrow_drop_up_sharp);
+    } else {
+      return Icon(Icons.arrow_drop_down_sharp);
+    }
   }
 }
