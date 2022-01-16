@@ -105,7 +105,7 @@ class _ItemListState extends State<ItemList> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => MapApp(
-                                          camPosition: LatLng(40.889550,29.374065),
+                                          camPosition: LatLng(post["lat"],post["long"]),
                                           title: "${post["name"]}",
                                           price: "${post["price"]}",
                                       )),

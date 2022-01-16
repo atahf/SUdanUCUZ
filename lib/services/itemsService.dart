@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/models/itemModel.dart';
 import 'package:project/services/itemStorage.dart';
@@ -16,7 +17,7 @@ class itemsService {
   String mediaUrl = "";
 
 
-  Future<item> addItem(String name,XFile pickedFile,String price,String category,String uid)async{
+  Future<item> addItem(String name,XFile pickedFile,String price,String category,String uid,LatLng loc)async{
     var ref = _firestore.collection("Items");
 
     mediaUrl = await _itemStorage.uploadMedia(File(pickedFile.path));
@@ -27,6 +28,8 @@ class itemsService {
       "category": category,
       "uid":uid,
       "pricen": makeItDouble(price),
+      "long": loc.longitude,
+      "lat": loc.latitude
     });
     await FirebaseFirestore.instance.collection("Comments").doc(documentRef.id).set({
       "total" : 0,

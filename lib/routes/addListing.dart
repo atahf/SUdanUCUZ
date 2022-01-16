@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/design/TextStyles.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +24,8 @@ class _AddListingState extends State<AddListing> {
   TextEditingController itemController3 = TextEditingController();
   List<String> categories = ["Electronics","Fashion","Book","Art","Craft","Outdoor"];
   String? category;
+  LatLng? x;
+
 
   itemsService _itemsService = itemsService();
 
@@ -128,6 +132,15 @@ class _AddListingState extends State<AddListing> {
                           items: categories.map(buildMenuItem).toList(),
                         onChanged: (value) => setState(() => category = value),
                       ),
+                      OutlinedButton(
+                          onPressed:(){
+                            Navigator.pushNamed(context, "/pickLocation");
+                          } ,
+                          child: Text(
+                            "Add Location",
+                          ),
+                        style: mainBstyle,
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
@@ -171,7 +184,7 @@ class _AddListingState extends State<AddListing> {
               child: InkWell(
                 onTap: () {
                   _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid)
+                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid,x!)
                       .then((value) {
                     Fluttertoast.showToast(
                         msg: "Your Item is Succesfully Listed",
