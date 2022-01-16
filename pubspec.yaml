@@ -49,6 +49,7 @@ dependencies:
   google_maps_flutter: ^2.1.1
   google_maps_place_picker_mb: ^2.0.0-mb.13
   flutter_rating_bar: ^4.0.0
+  geocode: ^1.0.1
 
 
 
