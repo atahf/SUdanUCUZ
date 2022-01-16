@@ -25,6 +25,7 @@ class _ItemListState extends State<ItemList> {
 
   itemsService _itemsService = itemsService();
 
+  late LatLng loc;
 
 
   @override
@@ -39,6 +40,13 @@ class _ItemListState extends State<ItemList> {
           shrinkWrap: true,
           itemBuilder: (context,index){
             DocumentSnapshot post = snaphot.data!.docs[index];
+            try{
+              loc = LatLng(post["lat"],post["long"]);
+            }
+            catch(e) {
+              loc = LatLng(40.891285,29.379905);
+            }
+
 
             return Padding(
               padding: EdgeInsets.all(8.0),
@@ -105,11 +113,10 @@ class _ItemListState extends State<ItemList> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => MapApp(
-                                          camPosition: LatLng(post["lat"],post["long"]),
+                                          camPosition: loc,
                                           title: "${post["name"]}",
                                           price: "${post["price"]}",
                                       )),
-                                      //TODO have to add LatLng values to each item
                                     );
                                   },
                                   icon: Icon(

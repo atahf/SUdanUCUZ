@@ -5,11 +5,9 @@ import 'package:project/design/ColorPalet.dart';
 import 'package:project/design/TextStyles.dart';
 
 
-class PickLoc extends StatefulWidget{
-  LatLng? inputLoc;
-  LatLng startLocation = LatLng(40.891285,29.379905);
-  LatLng get getLatLng => inputLoc ?? startLocation;
+LatLng startLocation = const LatLng(40.891285,29.379905);
 
+class PickLoc extends StatefulWidget{
 
   @override
   _PickLocState createState() => _PickLocState();
@@ -20,6 +18,9 @@ class _PickLocState extends State<PickLoc> {
   GoogleMapController? mapController;
   CameraPosition? cameraPosition;
   String location = "";
+  LatLng? inputLoc;     //TODO bunu addListinge bi yolla yollicagiz
+
+
 
   void _getLocation(LatLng loc) async {
     GeoCode geoCode = GeoCode();
@@ -55,7 +56,7 @@ class _PickLocState extends State<PickLoc> {
               GoogleMap(
                 zoomGesturesEnabled: true,
                 initialCameraPosition: CameraPosition(
-                  target: widget.startLocation,
+                  target: startLocation,
                   zoom: 14.0,
                 ),
                 mapType: MapType.normal,
@@ -67,8 +68,8 @@ class _PickLocState extends State<PickLoc> {
                 onCameraMove: (CameraPosition cameraPositiona) {
                   cameraPosition = cameraPositiona;
                   setState(() {
-                    widget.inputLoc = LatLng(cameraPosition!.target.latitude, cameraPosition!.target.longitude);
-                    _getLocation(widget.inputLoc!);
+                    inputLoc = LatLng(cameraPosition!.target.latitude, cameraPosition!.target.longitude);
+                    _getLocation(inputLoc!);
                   });
                 },
               ),

@@ -59,12 +59,6 @@ class _AddListingState extends State<AddListing> {
     }
   }
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -141,7 +135,7 @@ class _AddListingState extends State<AddListing> {
                               MaterialPageRoute(builder: (context) => pickLoc),
                             );
                             setState(() {
-                              x = pickLoc.getLatLng;
+                              //TODO get LatLng from PickLoc()
                             });
                           } ,
                           child: Text(

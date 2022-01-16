@@ -154,18 +154,6 @@ class _EditItemState extends State<EditItem> {
                         items: categories.map(buildMenuItem).toList(),
                         onChanged: (value) => setState(() => category = value),
                       ),
-                      OutlinedButton(
-                        onPressed:(){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PickLoc(inputLoc: x)),
-                          );
-                        } ,
-                        child: Text(
-                          "Add Location",
-                        ),
-                        style: mainBstyle,
-                      ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
