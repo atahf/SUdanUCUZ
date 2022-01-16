@@ -8,6 +8,7 @@ import 'package:project/services/itemsService.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project/services/location_picker.dart';
 
 
 class AddListing extends StatefulWidget {
@@ -134,7 +135,10 @@ class _AddListingState extends State<AddListing> {
                       ),
                       OutlinedButton(
                           onPressed:(){
-                            Navigator.pushNamed(context, "/pickLocation");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PickLoc(inputLoc: x)),
+                            );
                           } ,
                           child: Text(
                             "Add Location",

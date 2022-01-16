@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project/services/location_picker.dart';
+import 'package:project/design/TextStyles.dart';
 
 
 class EditItem extends StatefulWidget {
@@ -30,6 +33,8 @@ class _EditItemState extends State<EditItem> {
 
   List<String> categories = ["Electronics","Fashion","Book","Art","Craft","Outdoor"];
   String? category;
+
+  LatLng? x;
 
 
 
@@ -148,6 +153,18 @@ class _EditItemState extends State<EditItem> {
                         isExpanded: true,
                         items: categories.map(buildMenuItem).toList(),
                         onChanged: (value) => setState(() => category = value),
+                      ),
+                      OutlinedButton(
+                        onPressed:(){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PickLoc(inputLoc: x)),
+                          );
+                        } ,
+                        child: Text(
+                          "Add Location",
+                        ),
+                        style: mainBstyle,
                       ),
 
                       Padding(

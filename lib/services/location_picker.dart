@@ -6,7 +6,9 @@ import 'package:project/design/TextStyles.dart';
 
 
 class PickLoc extends StatefulWidget{
-  const PickLoc({Key? key}) : super(key: key);
+  LatLng? inputLoc;
+
+  PickLoc({Key? key, required this.inputLoc}) : super(key: key);
 
   @override
   _PickLocState createState() => _PickLocState();
@@ -17,7 +19,6 @@ class _PickLocState extends State<PickLoc> {
   GoogleMapController? mapController;
   CameraPosition? cameraPosition;
   LatLng startLocation = LatLng(40.891285,29.379905);
-  late LatLng inputLoc;
   String location = "";
 
   void _getLocation(LatLng loc) async {
@@ -66,8 +67,8 @@ class _PickLocState extends State<PickLoc> {
                 onCameraMove: (CameraPosition cameraPositiona) {
                   cameraPosition = cameraPositiona;
                   setState(() {
-                    inputLoc = LatLng(cameraPosition!.target.latitude, cameraPosition!.target.longitude);
-                    _getLocation(inputLoc);
+                    widget.inputLoc = LatLng(cameraPosition!.target.latitude, cameraPosition!.target.longitude);
+                    _getLocation(widget.inputLoc!);
                   });
                 },
               ),
