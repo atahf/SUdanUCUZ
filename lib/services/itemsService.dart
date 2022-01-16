@@ -55,6 +55,19 @@ class itemsService {
 
     return ref;
   }
+
+  Future <List<DocumentSnapshot>> getStatusSearch1(String query)async {
+    var ref = await _firestore.collection("Items").get();
+    List<DocumentSnapshot> items = [];
+    for(var doc in ref.docs){
+      if (contains(query, doc["name"])){
+
+        items.add(doc);
+      }
+    }
+
+    return items;
+  }
   
   Stream<QuerySnapshot> getComments(String iid) {
     var ref = _firestore.collection("Comments").doc(iid).collection("all").snapshots();
@@ -69,6 +82,10 @@ class itemsService {
     var ref = _firestore.collection("Items").doc(docId).delete();
 
     return ref;
+  }
+
+  bool contains(String a, String b){
+    return  b.toLowerCase().replaceAll(" ", "").contains(a.toLowerCase().replaceAll(" ", ""));
   }
 
 
