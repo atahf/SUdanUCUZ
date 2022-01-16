@@ -7,8 +7,9 @@ import 'package:project/design/TextStyles.dart';
 
 class PickLoc extends StatefulWidget{
   LatLng? inputLoc;
+  LatLng startLocation = LatLng(40.891285,29.379905);
+  LatLng get getLatLng => inputLoc ?? startLocation;
 
-  PickLoc({Key? key, required this.inputLoc}) : super(key: key);
 
   @override
   _PickLocState createState() => _PickLocState();
@@ -18,7 +19,6 @@ class _PickLocState extends State<PickLoc> {
   String googleApikey = "AIzaSyAXebm5jeIzd1tmZ6CZv9VXTwzTezPtibY";
   GoogleMapController? mapController;
   CameraPosition? cameraPosition;
-  LatLng startLocation = LatLng(40.891285,29.379905);
   String location = "";
 
   void _getLocation(LatLng loc) async {
@@ -55,7 +55,7 @@ class _PickLocState extends State<PickLoc> {
               GoogleMap(
                 zoomGesturesEnabled: true,
                 initialCameraPosition: CameraPosition(
-                  target: startLocation,
+                  target: widget.startLocation,
                   zoom: 14.0,
                 ),
                 mapType: MapType.normal,

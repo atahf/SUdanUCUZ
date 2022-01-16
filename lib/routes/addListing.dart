@@ -135,10 +135,14 @@ class _AddListingState extends State<AddListing> {
                       ),
                       OutlinedButton(
                           onPressed:(){
+                            PickLoc pickLoc = new PickLoc();
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => PickLoc(inputLoc: x)),
+                              MaterialPageRoute(builder: (context) => pickLoc),
                             );
+                            setState(() {
+                              x = pickLoc.getLatLng;
+                            });
                           } ,
                           child: Text(
                             "Add Location",
