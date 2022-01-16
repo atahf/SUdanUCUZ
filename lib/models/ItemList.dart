@@ -25,7 +25,10 @@ class _ItemListState extends State<ItemList> {
 
   itemsService _itemsService = itemsService();
 
-  Future setLoc(String seller,BuildContext context)async{
+  Future setLoc(String seller,BuildContext context,String iid)async{
+    var doc1 = await FirebaseFirestore.instance.collection("Items").doc(iid).get();
+    String price = doc1["price"];
+    String name = doc1["name"];
     var doc = await FirebaseFirestore.instance.collection("Locations").doc(seller).get();
     LatLng x;
     try {
@@ -39,6 +42,8 @@ class _ItemListState extends State<ItemList> {
       context,
       MaterialPageRoute(builder: (context) => MapApp(
         camPosition: x ,
+        price: price,
+        title: name,
         
       )),
     );
@@ -123,7 +128,7 @@ class _ItemListState extends State<ItemList> {
                               padding: const EdgeInsets.fromLTRB(20,0,0,0),
                               child: IconButton(
                                   onPressed: (){
-                                    setLoc(post["uid"], context);
+                                    setLoc(post["uid"], context,post.id);
                                   },
                                   icon: Icon(
                                     Icons.location_on_outlined,
