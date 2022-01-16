@@ -25,7 +25,24 @@ class _ItemListState extends State<ItemList> {
 
   itemsService _itemsService = itemsService();
 
-  late LatLng loc;
+  Future setLoc(String seller,BuildContext context)async{
+    var doc = await FirebaseFirestore.instance.collection("Locations").doc(seller).get();
+    LatLng x;
+    try {
+      x = LatLng(doc["alt"],doc["long"]);
+    }
+    catch (e) {
+      x = LatLng(40.891285,29.379905);
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapApp(
+        camPosition: x ,
+        
+      )),
+    );
+  }
 
 
   @override
@@ -40,12 +57,8 @@ class _ItemListState extends State<ItemList> {
           shrinkWrap: true,
           itemBuilder: (context,index){
             DocumentSnapshot post = snaphot.data!.docs[index];
-            try{
-              loc = LatLng(post["lat"],post["long"]);
-            }
-            catch(e) {
-              loc = LatLng(40.891285,29.379905);
-            }
+
+
 
 
             return Padding(
@@ -110,14 +123,7 @@ class _ItemListState extends State<ItemList> {
                               padding: const EdgeInsets.fromLTRB(20,0,0,0),
                               child: IconButton(
                                   onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => MapApp(
-                                          camPosition: loc,
-                                          title: "${post["name"]}",
-                                          price: "${post["price"]}",
-                                      )),
-                                    );
+                                    setLoc(post["uid"], context);
                                   },
                                   icon: Icon(
                                     Icons.location_on_outlined,

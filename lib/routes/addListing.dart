@@ -127,22 +127,7 @@ class _AddListingState extends State<AddListing> {
                           items: categories.map(buildMenuItem).toList(),
                         onChanged: (value) => setState(() => category = value),
                       ),
-                      OutlinedButton(
-                          onPressed:(){
-                            PickLoc pickLoc = new PickLoc();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => pickLoc),
-                            );
-                            setState(() {
-                              //TODO get LatLng from PickLoc()
-                            });
-                          } ,
-                          child: Text(
-                            "Add Location",
-                          ),
-                        style: mainBstyle,
-                      ),
+
 
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
@@ -186,7 +171,7 @@ class _AddListingState extends State<AddListing> {
               child: InkWell(
                 onTap: () {
                   _itemsService
-                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid,x!)
+                      .addItem(itemController.text, profileImage ?? "",itemController2.text,category!,FirebaseAuth.instance.currentUser!.uid)
                       .then((value) {
                     Fluttertoast.showToast(
                         msg: "Your Item is Succesfully Listed",

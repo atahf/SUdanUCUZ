@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/routes/editprofile.dart';
+import 'package:project/services/location_picker.dart';
 import '../services/auth.dart';
 import '../design/TextStyles.dart';
 import '../design/ColorPalet.dart';
@@ -97,7 +98,20 @@ class _AccountState extends State<Account> {
             },
             icon: Icon(
                 Icons.edit
-            ),),
+            ),
+          ),
+          IconButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PickLoc()),
+              );
+
+            },
+            icon: Icon(
+                Icons.pin_drop,
+            ),
+          ),
         ],
       ),
       body: ListView(

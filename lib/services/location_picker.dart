@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocode/geocode.dart';
@@ -40,13 +42,20 @@ class _PickLocState extends State<PickLoc> {
     }
   }
 
+  Future setLocation() async{
+    await FirebaseFirestore.instance.collection("Locations").doc(FirebaseAuth.instance.currentUser!.uid).set({
+      "long": inputLoc!.longitude,
+      "alt":inputLoc!.latitude
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: AppBar(
           backgroundColor: ColorPalet.appBarColor,
           title: Text(
-            "Location Picker",
+            "Choose Your Location",
             style: appBarText,
           ),
           centerTitle: true,
@@ -94,9 +103,10 @@ class _PickLocState extends State<PickLoc> {
                           ),
 
                           ElevatedButton(
-                            child: const Text("confirm address"),
+                            child: const Text("Confirm Your Adress"),
                             onPressed: () {
                               if(location != "") {
+                                setLocation();
                                 Navigator.pop(context);
                               }
                             },

@@ -55,7 +55,7 @@ class _MapAppState extends State<MapApp> {
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: widget.camPosition ?? LatLng(40.891285,29.379905),
-                  zoom: 17.5,
+                  zoom: 14,
                 ),
                 markers: markers.values.toSet(),
               ),
