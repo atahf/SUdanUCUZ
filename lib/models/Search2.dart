@@ -27,6 +27,10 @@ class _SearchView2State extends State<SearchView2> {
 
   Future fillData() async {
     data = await itemsService().getStatusSearch1(widget.query.text);
+
+    setState(() {
+      this.data = data;
+    });
   }
 
 
