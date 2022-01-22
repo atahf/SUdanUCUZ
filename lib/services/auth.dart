@@ -50,6 +50,30 @@ class AuthService {
       return null;
     }
   }
+  Future signInWithGoogle() async {
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      var credit = await _auth.signInWithCredential(credential);
+      User user = credit.user!;
+      await DatabaseService(uid: user.uid).updateUserData("Add Something", user.displayName??"John", user.email!,"");
+      return _userFromFirebase(user);
+    }
+    catch (e) {
+      return null;
+    }
+  }
 
   Future signOut() async {
     try {
@@ -61,80 +85,3 @@ class AuthService {
   }
 }
 
-class AuthServiceSignUpGoogle {
-  static SnackBar customSnackBar({required String content}) {
-    return SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        content,
-        style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
-      ),
-    );
-  }
-
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
-    final GoogleSignInAccount? googleSignInAccount =
-    await googleSignIn.signIn();
-
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      try {
-        final UserCredential userCredential =
-        await auth.signInWithCredential(credential);
-
-        user = userCredential.user;
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'account-exists-with-different-credential') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            AuthServiceSignUpGoogle.customSnackBar(
-              content:
-              'The account already exists with a different credential.',
-            ),
-          );
-        } else if (e.code == 'invalid-credential') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            AuthServiceSignUpGoogle.customSnackBar(
-              content:
-              'Error occurred while accessing credentials. Try again.',
-            ),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          AuthServiceSignUpGoogle.customSnackBar(
-            content: 'Error occurred using Google Sign-In. Try again.',
-          ),
-        );
-      }
-    }
-    return user;
-  }
-
-  static Future<void> signOut({required BuildContext context}) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
-    try {
-      if (!kIsWeb) {
-        await googleSignIn.signOut();
-      }
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        AuthServiceSignUpGoogle.customSnackBar(
-          content: 'Error signing out. Try again.',
-        ),
-      );
-    }
-  }
-}

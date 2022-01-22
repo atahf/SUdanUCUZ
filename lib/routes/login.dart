@@ -74,27 +74,8 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      setState(() {
-                        _isSigningIn = true;
-                      });
-
-                      User? user =
-                      await AuthServiceSignUpGoogle.signInWithGoogle(context: context);
-
-                      setState(() {
-                        _isSigningIn = false;
-                      });
-
-                      if (user != null) {
-                        print("success");
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, "/feedview");
-                      }
-
-                      setState(() {
-                        _isSigningIn = false;
-                      });
+                    onPressed: ()  {
+                      AuthService().signInWithGoogle();
                     },
                     child: const Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),

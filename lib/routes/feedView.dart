@@ -385,13 +385,13 @@ class _FeedViewState extends State<FeedView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var doc = await FirebaseFirestore.instance.collection("Locations").doc(FirebaseAuth.instance.currentUser!.uid).get();
-          try {
+          if (doc.exists){
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AddListing())
             );
           }
-          catch (e) {
+          else {
             showAlertDialog();
           }
         },
