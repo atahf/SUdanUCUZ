@@ -20,7 +20,7 @@ class _PickLocState extends State<PickLoc> {
   GoogleMapController? mapController;
   CameraPosition? cameraPosition;
   String location = "";
-  LatLng? inputLoc;     //TODO bunu addListinge bi yolla yollicagiz
+  LatLng? inputLoc;
 
 
 

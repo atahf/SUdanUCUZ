@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/design/TextStyles.dart';
 import 'package:project/models/Search2.dart';
 import 'package:project/models/categoryModel.dart';
 import 'package:project/models/searchView.dart';
 import 'package:project/routes/addListing.dart';
+import 'package:project/services/location_picker.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import '../services/db.dart';
@@ -42,6 +46,72 @@ class _FeedViewState extends State<FeedView> {
     "blue",
     "blue"
   ];
+
+  Future<LatLng> getLoc() async {
+    var doc = await FirebaseFirestore.instance.collection("Locations").doc("").get();
+    LatLng x;
+    try {
+      x = LatLng(doc["alt"],doc["long"]);
+    }
+    catch (e) {
+      x = LatLng(40.891285,29.379905);
+    }
+    return x;
+  }
+
+  Future<void> showAlertDialog() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Location Confirmation",
+              style: appBarText,
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  Text("You have to set a location for your products, or it will be set as campus by default."),
+
+                  //MapApp(),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await FirebaseFirestore.instance.collection("Locations").doc(FirebaseAuth.instance.currentUser!.uid).set({
+                    "long": 29.379905,
+                    "alt": 40.891285
+                  });
+
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => AddListing()));
+                },
+                child: const Text("Dismiss"),
+              ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddListing())
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PickLoc()),
+                  );
+                },
+                child: const Text("Set Location"),
+              ),
+            ],
+          );
+        }
+    );
+  }
 
   @override
   void setState(VoidCallback fn) {
@@ -313,9 +383,17 @@ class _FeedViewState extends State<FeedView> {
       ),
       bottomNavigationBar: Bottom(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddListing()));
+        onPressed: () async {
+          var doc = await FirebaseFirestore.instance.collection("Locations").doc(FirebaseAuth.instance.currentUser!.uid).get();
+          try {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddListing())
+            );
+          }
+          catch (e) {
+            showAlertDialog();
+          }
         },
         child: Icon(Icons.add),
       ),
