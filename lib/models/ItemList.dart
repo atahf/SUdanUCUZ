@@ -25,6 +25,38 @@ class _ItemListState extends State<ItemList> {
 
   itemsService _itemsService = itemsService();
 
+  Future showAlertDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Location Warning",
+              style: appBarText,
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  Text("Seller of this product has not mentioned any address!"),
+
+                  //MapApp(),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Dismiss"),
+              ),
+            ],
+          );
+        }
+    );
+  }
+
   Future setLoc(String seller,BuildContext context,String iid)async{
     var doc1 = await FirebaseFirestore.instance.collection("Items").doc(iid).get();
     String price = doc1["price"];
@@ -33,20 +65,19 @@ class _ItemListState extends State<ItemList> {
     LatLng x;
     try {
       x = LatLng(doc["alt"],doc["long"]);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapApp(
+          camPosition: x ,
+          price: price,
+          title: name,
+
+        )),
+      );
     }
     catch (e) {
-      x = LatLng(40.891285,29.379905);
+      showAlertDialog(context);
     }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MapApp(
-        camPosition: x ,
-        price: price,
-        title: name,
-        
-      )),
-    );
   }
 
 
