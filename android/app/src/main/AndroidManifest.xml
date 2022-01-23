@@ -10,7 +10,7 @@
 
 
    <application
-        android:label="project"
+        android:label="SUdanUCUZ"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAXebm5jeIzd1tmZ6CZv9VXTwzTezPtibY"/>
