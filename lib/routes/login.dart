@@ -176,8 +176,6 @@ class _LoginState extends State<Login> {
                             _formKey.currentState!.save();
 
                             auth.loginWithMailAndPass(context, mail, password);
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text('Logging in')));
                           }
                         },
                         child: const Text("Login"),

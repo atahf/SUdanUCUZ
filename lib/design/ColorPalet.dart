@@ -9,6 +9,7 @@ class ColorPalet  {
   static const Color generalText = Colors.black;
   static const Color titleC = Colors.blueAccent;
   static const Color appBarColor = Colors.blue;
-
+  static const Color errorColor = Colors.red;
+  static const Color warningColor = Colors.deepOrangeAccent;
 
 }

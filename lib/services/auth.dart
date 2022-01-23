@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:project/services/DatabaseService.dart';
-
-
+import '../design/ColorPalet.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -42,9 +41,21 @@ class AuthService {
 
   Future loginWithMailAndPass(BuildContext context, String mail, String pass) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(email: mail, password: pass);
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: mail, password: pass);
       User user = result.user!;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Logging in')));
       return _userFromFirebase(user);
+    } on FirebaseAuthException catch(e) {
+      if (e.code == "user-not-found" || e.code == "wrong-password") {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Wrong Email or Password', style: TextStyle(color: ColorPalet.errorColor))));
+      }
+      else if (e.code == "user-disabled") {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('For some reasons your account is disabled', style: TextStyle(color: ColorPalet.errorColor))));
+      }
     } catch (e) {
 
       return null;
