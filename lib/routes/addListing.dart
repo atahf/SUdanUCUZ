@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/design/ColorPalet.dart';
 import 'package:project/design/TextStyles.dart';
 import 'package:project/services/itemsService.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,8 @@ class _AddListingState extends State<AddListing> {
       }
       else {
         return CircleAvatar(
-          backgroundImage: AssetImage("assets/eminem.jpg"),
+          child: const Icon(Icons.add_a_photo_outlined, color: ColorPalet.divider, size: 90),
+          backgroundColor: ColorPalet.appBarColor,
           radius: height * 0.15,
         );
       }
